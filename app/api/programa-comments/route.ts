@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/lib/firebase";
+import { db } from "../../lib/firebase";
 import { collection, addDoc, serverTimestamp, query, where, orderBy, getDocs } from "firebase/firestore";
 
 export async function POST(req: NextRequest) {

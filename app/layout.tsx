@@ -9,7 +9,7 @@ import { ToastProvider } from "./context/ToastContext";
 import LayoutContentClient from "./components/LayoutContentClient";
 import { StructuredData } from "./components/StructuredData";
 import type { Metadata, Viewport } from "next";
-import { Barlow_Condensed } from "next/font/google";
+import { Inter } from "next/font/google";
 
 // ISR Global
 export const revalidate = 1800;
@@ -21,11 +21,10 @@ const SITE_URL =
 
 const SITE_NAME = "Radio Oso - 98.5 FM";
 
-const barlowCondensed = Barlow_Condensed({
+const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  style: ["normal"],
-  variable: "--font-barlow-condensed",
+  variable: "--font-inter",
 });
 
 // Aplica el theme ANTES del primer render (evita flash). Si no hay
@@ -161,7 +160,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${barlowCondensed.variable} dark`}
+      className={`${inter.variable} dark`}
       data-theme="dark"
       suppressHydrationWarning
     >

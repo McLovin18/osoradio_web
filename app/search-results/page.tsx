@@ -1,7 +1,7 @@
 "use client";
 import BottomBarPublic from "../components/BottomBarPublic";
 import { useUser } from "../context/UserContext";
-import { useEffect, useState, useMemo, useCallback, useRef } from "react";
+import { useEffect, useState, useMemo, useCallback, useRef, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import ProductoCard from "../components/ProductoCard";
 import { Loading3DIcon } from "../components/Loading3DIcon";
@@ -16,7 +16,7 @@ import {
 import { collection, query } from "firebase/firestore";
 import { db } from "../lib/firebase";
 
-export default function SearchResultsPage() {
+function SearchResultsContent() {
   const searchParams = useSearchParams();
   const queryParam = searchParams?.get("query") || "";
   const categoriaId = (searchParams?.get("cat") || searchParams?.get("category") || "").trim();
@@ -258,5 +258,17 @@ export default function SearchResultsPage() {
             )}
       </main>
     </div>
+  );
+}
+
+export default function SearchResultsPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg)", color: "var(--text)" }}>
+        <Loading3DIcon />
+      </div>
+    }>
+      <SearchResultsContent />
+    </Suspense>
   );
 }

@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { applyActionCode, getAuth } from "firebase/auth";
 import { Check, AlertCircle, Loader } from "lucide-react";
 
 type VerificationState = "loading" | "success" | "expired" | "error";
 
-export default function VerifyEmailPage() {
+function VerifyEmailContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [state, setState] = useState<VerificationState>("loading");
@@ -140,6 +140,18 @@ export default function VerifyEmailPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-screen bg-white text-gray-900">
+        <Loader className="w-12 h-12 text-purple-600 animate-spin" />
+      </div>
+    }>
+      <VerifyEmailContent />
+    </Suspense>
   );
 }
 
