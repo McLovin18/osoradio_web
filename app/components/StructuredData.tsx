@@ -4,26 +4,26 @@
  */
 
 export function StructuredData() {
-  const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://imw_ec.com";
+  const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://radiooso.ec";
 
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "IMW - In My Wardrobe",
+    name: "Radio Oso - 98.5 FM",
     url: SITE_URL,
     logo: `${SITE_URL}/logo.png`,
-    description: "Tienda online de perfumes originales importados desde USA",
+    description: "Emisora de radio en Ecuador transmitiendo en 98.5 FM. Programas en vivo, la mejor música 24/7 y contenido de entretenimiento.",
     sameAs: [
-      "https://www.instagram.com/imw_ec/",
-      "https://www.facebook.com/imw_ec",
-      "https://www.tiktok.com/@imw_ec",
+      "https://www.instagram.com/radiooso_ec/",
+      "https://www.facebook.com/radiooso_ec",
+      "https://www.tiktok.com/@radiooso_ec",
     ],
     address: {
       "@type": "PostalAddress",
       addressCountry: "EC",
-      addressLocality: "Guayaquil",
-      postalCode: "090XXX",
-      streetAddress: "Tu dirección aquí",
+      addressLocality: "Ecuador",
+      postalCode: "",
+      streetAddress: "",
     },
     contactPoint: {
       "@type": "ContactPoint",
@@ -35,42 +35,33 @@ export function StructuredData() {
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "IMW - In My Wardrobe",
+    name: "Radio Oso - 98.5 FM",
     url: SITE_URL,
     potentialAction: {
       "@type": "SearchAction",
       target: {
         "@type": "EntryPoint",
-        urlTemplate: `${SITE_URL}/products-by-category?search={search_term_string}`,
+        urlTemplate: `${SITE_URL}/search-results?query={search_term_string}`,
       },
       "query-input": "required name=search_term_string",
     },
   };
 
-  const localBusinessSchema = {
+  const radioStationSchema = {
     "@context": "https://schema.org",
-    "@type": "Store",
-    name: "IMW - In My Wardrobe",
+    "@type": "RadioStation",
+    name: "Radio Oso - 98.5 FM",
     image: `${SITE_URL}/logo.png`,
     description:
-      "Tienda online de perfumes originales importados desde USA con envíos a todo Ecuador",
+      "Emisora de radio en Ecuador transmitiendo en 98.5 FM. Programas en vivo, la mejor música 24/7 y contenido de entretenimiento.",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Tu dirección aquí",
-      addressLocality: "Guayaquil",
-      addressRegion: "Guayas",
-      postalCode: "090XXX",
       addressCountry: "EC",
+      addressLocality: "Ecuador",
     },
     telephone: "+593-968-514-889",
-    openingHoursSpecification: {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      opens: "09:00",
-      closes: "18:00",
-    },
+    broadcastFrequency: "98.5 FM",
     areaServed: "EC",
-    priceRange: "$$",
   };
 
   return (
@@ -90,7 +81,7 @@ export function StructuredData() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(localBusinessSchema),
+          __html: JSON.stringify(radioStationSchema),
         }}
       />
     </>

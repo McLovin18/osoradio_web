@@ -39,7 +39,7 @@ export default function ProductosPage() {
   ).trim();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [productos, setProductos] = useState<Producto[]>([]);
+  const [contenido, setContenido] = useState<Producto[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [categorias, setCategorias] = useState<any[]>([]);
@@ -53,7 +53,7 @@ export default function ProductosPage() {
   }, []);
 
   useEffect(() => {
-    async function fetchProductos() {
+    async function fetchContenido() {
       setLoading(true);
       try {
         const all = await obtenerProductos();
@@ -93,16 +93,16 @@ export default function ProductosPage() {
           );
         }
 
-        setProductos(prods);
+        setContenido(prods);
       } catch (error) {
-        console.error("Error cargando productos:", error);
-        setProductos([]);
+        console.error("Error cargando contenido:", error);
+        setContenido([]);
       } finally {
         setLoading(false);
       }
     }
 
-    fetchProductos();
+    fetchContenido();
   }, [categoria, subcategoria, subsubcategoria, categorias]);
 
   useEffect(() => {
@@ -110,8 +110,8 @@ export default function ProductosPage() {
     setIsAuthenticated(loggedIn);
   }, []);
 
-  const productosFiltrados = useMemo(() => {
-    return productos
+  const contenidoFiltrado = useMemo(() => {
+    return contenido
       .filter((p: any) => {
         // Solo aplicar filtros si se especifica una categoría
         if (categoria && categorias.length > 0) {
@@ -160,9 +160,9 @@ export default function ProductosPage() {
         if (a.createdAt && b.createdAt) return b.createdAt - a.createdAt;
         return 0;
       });
-  }, [productos, categoria, subcategoria, subsubcategoria, categorias]);
+  }, [contenido, categoria, subcategoria, subsubcategoria, categorias]);
 
-  const getProductsPerPage = () => {
+  const getItemsPerPage = () => {
     if (typeof window !== "undefined") {
       if (window.innerWidth < 640) return 10;
       if (window.innerWidth >= 1024) return 12;
@@ -171,26 +171,26 @@ export default function ProductosPage() {
     }
     return 10;
   };
-  const [productsPerPage, setProductsPerPage] = useState(getProductsPerPage());
+  const [itemsPerPage, setItemsPerPage] = useState(getItemsPerPage());
 
   useEffect(() => {
     function handleResize() {
-      setProductsPerPage(getProductsPerPage());
+      setItemsPerPage(getItemsPerPage());
     }
     window.addEventListener("resize", handleResize);
     handleResize();
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const totalPages = Math.ceil(productosFiltrados.length / productsPerPage);
-  const paginatedProducts = productosFiltrados.slice(
-    (currentPage - 1) * productsPerPage,
-    currentPage * productsPerPage
+  const totalPages = Math.ceil(contenidoFiltrado.length / itemsPerPage);
+  const paginatedItems = contenidoFiltrado.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
   );
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [productosFiltrados.length, categoria, subcategoria, subsubcategoria]);
+  }, [contenidoFiltrado.length, categoria, subcategoria, subsubcategoria]);
 
   return (
     <div className="min-h-screen flex flex-col transition-colors" style={{ background: "var(--bg)", color: "var(--text)" }}>
@@ -211,19 +211,19 @@ export default function ProductosPage() {
               </div>
             ))}
           </div>
-        ) : productosFiltrados.length === 0 ? (
+        ) : contenidoFiltrado.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-24 gap-4 text-center">
             <div>
               <p style={{ color: "var(--text)" }} className="font-semibold">Sin resultados</p>
               <p style={{ color: "var(--textSecondary)" }} className="text-sm mt-1 max-w-60">
-                Por el momento no hay productos disponibles.
+                Por el momento no hay contenido disponible.
               </p>
             </div>
           </div>
         ) : (
           <>
             <div className="grid grid-cols-2 gap-2 lg:grid-cols-4 animate-in fade-in duration-700">
-              {paginatedProducts.map((p: any, index: number) => (
+              {paginatedItems.map((p: any, index: number) => (
                 <ProductoCard
                   key={p.id}
                   producto={p}

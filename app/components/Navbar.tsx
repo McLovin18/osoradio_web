@@ -183,9 +183,12 @@ export const Navbar = () => {
 
   useEffect(() => { setMounted(true); }, []);
 
+  // Cargar productos solo cuando se abre el buscador (lazy loading)
   useEffect(() => {
-    obtenerProductos().then((prods) => setAllProducts(prods));
-  }, []);
+    if (searchOpen && allProducts.length === 0) {
+      obtenerProductos().then((prods) => setAllProducts(prods));
+    }
+  }, [searchOpen]);
 
   // Cargar categorías (sin listener en tiempo real para reducir conexiones)
   useEffect(() => {
@@ -260,20 +263,22 @@ export const Navbar = () => {
 
   const links = [
     { href: "/", label: "Inicio" },
-    { href: "/productos", label: "Ver Catalogo" },
-    { href: "/blogs", label: "Blogs" },
+    { href: "/programas", label: "Programas" },
+    { href: "/interlocutores", label: "Interlocutores" },
+    { href: "/blogs", label: "Noticias" },
+    { href: "/contacto", label: "Contacto" },
   ];
 
   const infoSliderItems = [
-    "🌐 Tienda Online - NO LOCAL 🏢❌",
-    "💯 Productos originales - Importados desde USA 🇺🇸",
-    "🚛 Envíos por Servientrega",
-    "📲 Whatsapp 0968514889",
+    "📻 Radio Oso - 98.5 FM Ecuador ���",
+    "🎵 La mejor música en tu sintonía",
+    "🎙️ Programas en vivo",
+    "📲 Contáctanos al 0968514889",
   ];
 
   // Logo paths - AGREGA TUS LOGOS AQUÍ
-  const logoDark = "/imw-dark.png"; // Logo para modo oscuro
-  const logoLight = "/imw-light.png"; // Logo para modo claro
+  const logoDark = "/logo_oso.png"; // Logo para modo oscuro
+  const logoLight = "/logo_oso.png"; // Logo para modo claro
   const logoSrc = theme === "light" ? logoLight : logoDark;
 
   const handleSearch = () => {
@@ -332,7 +337,7 @@ export const Navbar = () => {
             >
               <Image
                 src={logoSrc}
-                alt="IMW"
+                alt="Radio Oso"
                 width={180}
                 height={48}
                 className="h-12 w-auto"
@@ -373,7 +378,7 @@ export const Navbar = () => {
                       <input
                         ref={searchInputRef}
                         type="text"
-                        placeholder="Buscar un producto..."
+                        placeholder="Buscar contenido..."
                         className="bg-transparent outline-none text-sm flex-1 text-body"
                         style={{ color: "#0f172a", minWidth: 140 }}
                         autoComplete="off"
@@ -450,25 +455,6 @@ export const Navbar = () => {
               )}
             </div>
             <ThemeToggle />
-            <div className="relative flex flex-col items-center">
-              <a
-                href={user ? "/admin/cart" : "/cart"}
-                className="flex items-center justify-center px-1 rounded-xl transition-colors hover:bg-white/10"
-                style={{ color: theme === "light" ? "#0f172a" : "#ffffff" }}
-                aria-label="Carrito"
-                data-onboarding="carrito"
-              >
-                <span className="material-icons-round text-xl">shopping_cart</span>
-                {carrito && carrito.length > 0 && (
-                  <span 
-                    className="absolute -top-2 -right-2 bg-amber-500 text-black text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 z-10"
-                    style={{ borderColor: theme === "light" ? "#ffffff" : "#111827" }}
-                  >
-                    {carrito.length}
-                  </span>
-                )}
-              </a>
-            </div>
 
             {user ? (
               <div className="relative">
@@ -678,7 +664,7 @@ export const Navbar = () => {
               style={{ borderColor: theme === "light" ? "#e2e8f0" : "rgba(255,255,255,0.1)" }}
             >
                               <span className="font-bold text-base">
-                IMW - In My Wardrobe
+                Radio Oso - 98.5 FM
               </span>
               <button
                 onClick={() => setMobileOpen(false)}
@@ -710,7 +696,7 @@ export const Navbar = () => {
                 <input
                   ref={searchInputRef}
                   type="text"
-                  placeholder="Buscar productos..."
+                  placeholder="Buscar contenido..."
                   className="bg-transparent outline-none text-sm flex-1"
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}

@@ -2,9 +2,6 @@
 import React, { useState, useEffect } from "react";
 import type { Producto } from "../../lib/productos-db";
 import CategoriasAdminPanel from "./CategoriasAdminPanel";
-import MarcasAdminPanel from "./MarcasAdminPanel";
-import BodegasAdminPanel from "./BodegasAdminPanel";
-import VariationsAdminPanel from "./VariationsAdminPanel";
 import ProductoFormModal from "./ProductoFormModal";
 import ProductoCard from "../../components/ProductoCard";
 import { obtenerCategorias } from "../../lib/categorias-db";
@@ -14,9 +11,7 @@ import {
   actualizarProducto,
   eliminarProducto
 } from "../../lib/productos-db";
-import { crearBodegaDefault } from "../../lib/bodegas-db";
 
-type FiltroStock = "todos" | "con-stock" | "poco-stock" | "sin-stock";
 
 export default function AdminInventario() {
 
@@ -27,33 +22,14 @@ export default function AdminInventario() {
   const [search, setSearch] = useState("");
   const [orden, setOrden] = useState("newest");
   const [vista, setVista] = useState("productos");
-  const [filtroStock, setFiltroStock] = useState<FiltroStock>("todos");
   const [selectedCategoria, setSelectedCategoria] = useState<string | null>(null);
   const [selectedSubcategoria, setSelectedSubcategoria] = useState<string | null>(null);
   const [categoriasDb, setCategoriasDb] = useState<any[]>([]);
 
-  function getStockTotal(producto: Producto) {
-    const variantes = Array.isArray(producto.stockVariants) ? producto.stockVariants : [];
-    if (variantes.length > 0) {
-      return variantes.reduce((sum, variant) => sum + Number(variant?.cantidad || 0), 0);
-    }
-
-    return Number(producto.stock || 0);
-  }
-
   // 📊 Resumen de inventario
   const resumen = React.useMemo(() => {
     const total = productos.length;
-    let conStock = 0, pocoStock = 0, sinStock = 0;
-
-    productos.forEach(p => {
-      const stockTotal = getStockTotal(p);
-      if (stockTotal === 0) sinStock++;
-      else if (stockTotal <= 5) pocoStock++;
-      else conStock++;
-    });
-
-    return { total, conStock, pocoStock, sinStock };
+    return { total };
   }, [productos]);
 
   // 🔄 Cargar productos
@@ -64,9 +40,6 @@ export default function AdminInventario() {
       setProductos(prods);
       setLoading(false);
     }
-    
-    // Crear bodega default si no existe
-    crearBodegaDefault().catch(err => console.error("Error creando bodega default:", err));
     
     fetchProductos();
     obtenerCategorias().then(setCategoriasDb).catch(err => console.error("Error cargando categorías:", err));
@@ -112,10 +85,6 @@ export default function AdminInventario() {
       if (texto && !nombre.includes(texto) && !desc.includes(texto)) return false;
       if (selectedCategoria && p.categoria !== selectedCategoria) return false;
       if (selectedSubcategoria && p.subcategoria !== selectedSubcategoria) return false;
-      const stockTotal = getStockTotal(p);
-      if (filtroStock === "sin-stock") return stockTotal === 0;
-      if (filtroStock === "poco-stock") return stockTotal > 0 && stockTotal <= 5;
-      if (filtroStock === "con-stock") return stockTotal > 5;
       return true;
     })
     .sort((a, b) => {
@@ -146,27 +115,6 @@ export default function AdminInventario() {
             Productos
           </button>
 
-          <button
-            className={`flex-1 py-3 rounded-xl font-bold border-2 transition-all ${
-              vista === "variaciones"
-                ? "bg-indigo-700 text-white border-indigo-700"
-                : "bg-white text-indigo-700 border-indigo-700"
-            }`}
-            onClick={() => setVista("variaciones")}
-          >
-            Variaciones
-          </button>
-
-          <button
-            className={`flex-1 py-3 rounded-xl font-bold border-2 transition-all ${
-              vista === "marcas"
-                ? "bg-green-700 text-white border-green-700"
-                : "bg-white text-green-700 border-green-700"
-            }`}
-            onClick={() => setVista("marcas")}
-          >
-            Marcas
-          </button>
 
           <button
             className={`flex-1 py-3 rounded-xl font-bold border-2 transition-all ${
@@ -178,17 +126,6 @@ export default function AdminInventario() {
           >
             Categorías
           </button>
-
-          <button
-            className={`flex-1 py-3 rounded-xl font-bold border-2 transition-all ${
-              vista === "bodegas"
-                ? "bg-red-700 text-white border-red-700"
-                : "bg-white text-red-700 border-red-700"
-            }`}
-            onClick={() => setVista("bodegas")}
-          >
-            Bodegas
-          </button>
         </div>
 
         {/* ================== VISTA PRODUCTOS ================== */}
@@ -197,53 +134,6 @@ export default function AdminInventario() {
             {/* RESUMEN */}
             <div className="flex gap-8 items-center mb-4 text-base text-slate-700 dark:text-slate-200">
               <div>Total: <b>{resumen.total}</b></div>
-              <div>Stock: <b>{resumen.conStock}</b></div>
-              <div>Poco: <b>{resumen.pocoStock}</b></div>
-              <div>Sin stock: <b>{resumen.sinStock}</b></div>
-            </div>
-
-            {/* FILTRO STOCK */}
-            <div className="flex gap-2 mb-4 flex-wrap text-black">
-              <button
-                onClick={() => setFiltroStock("todos")}
-                className={`px-3 py-1.5 rounded-lg text-sm font-semibold border transition-all ${
-                  filtroStock === "todos"
-                    ? "bg-black text-white border-black"
-                    : "bg-white text-black border-black hover:bg-slate-100"
-                }`}
-              >
-                Todos ({resumen.total})
-              </button>
-              <button
-                onClick={() => setFiltroStock("con-stock")}
-                className={`px-3 py-1.5 rounded-lg text-sm font-semibold border transition-all ${
-                  filtroStock === "con-stock"
-                    ? "bg-green-600 text-white border-black"
-                    : "bg-white text-black border-black hover:bg-green-50"
-                }`}
-              >
-                Con stock ({resumen.conStock})
-              </button>
-              <button
-                onClick={() => setFiltroStock("poco-stock")}
-                className={`px-3 py-1.5 rounded-lg text-sm font-semibold border transition-all ${
-                  filtroStock === "poco-stock"
-                    ? "bg-amber-500 text-white border-black"
-                    : "bg-white text-black border-black hover:bg-amber-50"
-                }`}
-              >
-                Poco stock ({resumen.pocoStock})
-              </button>
-              <button
-                onClick={() => setFiltroStock("sin-stock")}
-                className={`px-3 py-1.5 rounded-lg text-sm font-semibold border transition-all ${
-                  filtroStock === "sin-stock"
-                    ? "bg-red-600 text-white border-black"
-                    : "bg-white text-black border-black hover:bg-red-50"
-                }`}
-              >
-                Sin stock ({resumen.sinStock})
-              </button>
             </div>
 
             {/* BARRA DE FILTROS PRINCIPAL */}
@@ -318,17 +208,12 @@ export default function AdminInventario() {
                       <tr>
                         <th className="text-left font-semibold px-6 py-4 w-[40%]">Producto</th>
                         <th className="text-left font-semibold px-4 py-4 w-[20%]">Fecha actualización</th>
-                        <th className="text-center font-semibold px-4 py-4 w-[8%]">Destacado</th>
-                        <th className="text-center font-semibold px-4 py-4 w-[8%]">Promocionar</th>
-                        <th className="text-right font-semibold px-4 py-4 w-[9%]">Precio</th>
-                        <th className="text-right font-semibold px-6 py-4 w-[9%]">Existencias</th>
                       </tr>
                     </thead>
                     <tbody>
                       {productosFiltrados.map((p) => {
                         const thumb = p.imagenes?.[0] || p.imagen || "/no-image.png";
                         const fecha = p.createdAt ? new Date(p.createdAt).toLocaleString() : "-";
-                        const stockTotal = getStockTotal(p);
 
                         return (
                           <tr key={p.id} className="border-b last:border-b-0 hover:bg-slate-50/60 transition-colors align-middle">
@@ -349,64 +234,6 @@ export default function AdminInventario() {
                               </div>
                             </td>
                             <td className="px-4 py-3 text-slate-800 whitespace-nowrap">{fecha}</td>
-                            <td className="px-4 py-3 text-center">
-                              <label className="inline-flex items-center justify-center">
-                                <input
-                                  type="checkbox"
-                                  checked={Boolean(p.destacado)}
-                                  className="h-5 w-5 accent-purple-600 cursor-pointer"
-                                  onChange={async (e) => {
-                                    const isChecked = e.target.checked;
-                                    setProductos((prev) =>
-                                      prev.map((item) =>
-                                        item.id === p.id ? { ...item, destacado: isChecked } : item
-                                      )
-                                    );
-                                    try {
-                                      await actualizarProducto(p.id, { destacado: isChecked });
-                                    } catch (error) {
-                                      console.error("Error actualizando destacado:", error);
-                                      setProductos((prev) =>
-                                        prev.map((item) =>
-                                          item.id === p.id ? { ...item, destacado: !isChecked } : item
-                                        )
-                                      );
-                                    }
-                                  }}
-                                  aria-label={`Marcar ${p.nombre || "producto"} como destacado`}
-                                />
-                              </label>
-                            </td>
-                            <td className="px-4 py-3 text-center">
-                              <label className="inline-flex items-center justify-center">
-                                <input
-                                  type="checkbox"
-                                  checked={Boolean(p.promocionar)}
-                                  className="h-5 w-5 accent-amber-600 cursor-pointer"
-                                  onChange={async (e) => {
-                                    const isChecked = e.target.checked;
-                                    setProductos((prev) =>
-                                      prev.map((item) =>
-                                        item.id === p.id ? { ...item, promocionar: isChecked } : item
-                                      )
-                                    );
-                                    try {
-                                      await actualizarProducto(p.id, { promocionar: isChecked });
-                                    } catch (error) {
-                                      console.error("Error actualizando promocionar:", error);
-                                      setProductos((prev) =>
-                                        prev.map((item) =>
-                                          item.id === p.id ? { ...item, promocionar: !isChecked } : item
-                                        )
-                                      );
-                                    }
-                                  }}
-                                  aria-label={`Marcar ${p.nombre || "producto"} como promocional`}
-                                />
-                              </label>
-                            </td>
-                            <td className="px-4 py-3 text-right font-bold text-amber-600 whitespace-nowrap">${Number(p.precio || 0).toFixed(2)}</td>
-                            <td className="px-6 py-3 text-right font-bold text-black whitespace-nowrap">{stockTotal}</td>
                           </tr>
                         );
                       })}
@@ -418,11 +245,8 @@ export default function AdminInventario() {
           </>
         )}
 
-        {/* ================== OTRAS VISTAS ================== */}
-        {vista === "variaciones" && <VariationsAdminPanel />}
-        {vista === "marcas" && <MarcasAdminPanel />}
+        {/* ================== VISTA CATEGORÍAS ================== */}
         {vista === "categorias" && <CategoriasAdminPanel />}
-        {vista === "bodegas" && <BodegasAdminPanel />}
 
       </div>
     </div>

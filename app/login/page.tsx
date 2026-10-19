@@ -134,7 +134,7 @@ export default function LoginPage() {
           </svg>
         </div>
         <h1 style={{ color: "var(--text)" }} className="text-3xl font-extrabold tracking-tight mb-2">
-          IMW LOGIN
+          OsoRadio LOGIN
         </h1>
         <p style={{ color: "var(--textSecondary)" }} className="text-base">
           Acceso exclusivo para administración.

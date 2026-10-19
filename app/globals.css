@@ -3,47 +3,69 @@
 
 :root {
   /* ============================================================
-     PALETA DE COLORES — IMW (In My Wardrobe)
-     Negro Medianoche  #0B0D12  (fondo dark)
-     Azul Abismo       #1B2430  (superficies dark)
-     Gris Platino      #C0C1C4  (texto secundario dark)
-     Blanco Puro       #FFFFFF  (fondo light / texto dark)
-     Dorado Antiguo    #D4A933  (CTA y detalles de marca)
+     PALETA — RADIO NEÓN ECUADOR
+     Noche Andina     #0A0618  (fondo dark)
+     Ultravioleta     #150E2E  (superficies dark)
+     Rosa Neón        #FF2E9A  (color principal / En vivo)
+     Cian Eléctrico   #00E5FF  (acento / frecuencia)
+     Amarillo Sol     #FFE600  (detalle tricolor Ecuador)
+     Lila Humo        #BDB4E6  (texto secundario dark)
+     Blanco Escarcha  #F8F6FF  (fondo light)
      ============================================================ */
 
-  /* --- Colores base de la paleta --- */
-  --color-negro: #0b0d12;
-  --color-azul: #1b2430;
-  --color-platino: #c0c1c4;
-  --color-blanco: #ffffff;
-  --color-dorado: #d4a933;
+  /* --- Colores base --- */
+  --color-noche: #0a0618;
+  --color-ultravioleta: #150e2e;
+  --color-ultravioleta-light: #1f1646;
+  --color-ultravioleta-border: #33266b;
+  --color-lila: #bdb4e6;
 
-  /* --- Variantes derivadas --- */
-  --color-azul-light: #25303f;      /* azul abismo aclarado, hover/superficies elevadas */
-  --color-azul-border: #2c3747;     /* bordes en dark */
-  --color-dorado-dark: #b8912a;     /* hover en botones dorados */
-  --color-dorado-text: #8a6a12;     /* dorado legible como texto sobre blanco */
-  --color-negro-deep: #07090d;      /* footer dark, más profundo que el fondo */
-  --color-gris-claro: #f1f2f4;      /* superficies light (derivado de platino) */
-  --color-gris-border: #d9dadd;     /* bordes en light */
-  --color-slate-text: #475264;      /* texto secundario light */
+  --color-neon-rosa: #ff2e9a;
+  --color-neon-rosa-dark: #d4167d;
+  --color-neon-cian: #00e5ff;
+  --color-neon-amarillo: #ffe600;
+  --color-neon-lima: #b8ff2c;
 
-  /* --- Tipografía --- */
-  --font-body-family: var(--font-barlow-condensed), "Barlow Condensed", sans-serif;
+  --color-escarcha: #f8f6ff;
+  --color-escarcha-2: #ece7fc;
+  --color-escarcha-border: #d5cbf2;
+  --color-tinta: #1a1238;
+  --color-tinta-suave: #51487a;
+
+  /* Versiones oscurecidas del neón para texto legible sobre fondo claro */
+  --color-rosa-text: #c20068;
+  --color-cian-text: #00718a;
+
+  /* Tricolor Ecuador */
+  --ec-amarillo: #ffd100;
+  --ec-azul: #0033a0;
+  --ec-rojo: #ef3340;
+
+  /* --- Tipografía ---
+     Cargar en layout.tsx con next/font: Unbounded, Outfit, JetBrains_Mono
+     variables: --font-unbounded, --font-outfit, --font-jetbrains */
+  --font-body-family: var(--font-outfit), "Outfit", system-ui, sans-serif;
   --font-body-style: normal;
   --font-body-weight: 400;
-  --font-body-weight-bold: 700;
+  --font-body-weight-bold: 600;
 
-  --font-heading-family: var(--font-barlow-condensed), "Barlow Condensed", sans-serif;
+  --font-heading-family: var(--font-unbounded), "Unbounded", system-ui, sans-serif;
   --font-heading-style: normal;
-  --font-heading-weight: 700;
+  --font-heading-weight: 800;
+
+  --font-display-mono: var(--font-jetbrains), "JetBrains Mono", ui-monospace, monospace;
 
   --font-body-scale: 1.0;
-  --font-heading-scale: 1.15;
+  --font-heading-scale: 1.0;
+  --font-heading-tracking: -0.025em;
 
   /* --- Tipografía del navbar --- */
-  --font-navbar-body-family: var(--font-barlow-condensed), "Barlow Condensed", sans-serif;
-  --font-navbar-heading-family: var(--font-barlow-condensed), "Barlow Condensed", sans-serif;
+  --font-navbar-body-family: var(--font-outfit), "Outfit", system-ui, sans-serif;
+  --font-navbar-heading-family: var(--font-unbounded), "Unbounded", system-ui, sans-serif;
+
+  /* --- Forma --- */
+  --radius-card: 20px;
+  --radius-pill: 999px;
 }
 
 /* --- Tema Oscuro (por defecto) --- */
@@ -52,99 +74,133 @@
   color-scheme: dark;
 
   /* --- Semántica --- */
-  --background: var(--color-negro);
-  --foreground: var(--color-blanco);
+  --background: var(--color-noche);
+  --foreground: #ffffff;
 
-  --bg: var(--color-negro);
-  --bgSecondary: var(--color-azul);
+  --bg: var(--color-noche);
+  --bgSecondary: var(--color-ultravioleta);
 
-  --text: var(--color-blanco);
-  --textSecondary: var(--color-platino);
+  --text: #ffffff;
+  --textSecondary: var(--color-lila);
 
-  --border: var(--color-azul-border);
+  --border: var(--color-ultravioleta-border);
 
-  --cardBg: var(--color-azul);
+  --cardBg: var(--color-ultravioleta);
 
   /* --- Colores de marca / acción --- */
-  --primary: var(--color-dorado);
-  --primaryHover: var(--color-dorado-dark);
-  --primaryForeground: var(--color-negro);
+  --primary: var(--color-neon-rosa);
+  --primaryHover: #ff5cb1;
+  --primaryForeground: var(--color-noche);
 
-  --secondary: var(--color-azul);
-  --secondaryHover: var(--color-azul-light);
-  --secondaryForeground: var(--color-blanco);
+  --secondary: var(--color-ultravioleta-light);
+  --secondaryHover: var(--color-ultravioleta-border);
+  --secondaryForeground: #ffffff;
 
-  --accent: var(--color-dorado);
-  --accentForeground: var(--color-negro);
+  --accent: var(--color-neon-cian);
+  --accentForeground: var(--color-noche);
 
-  --muted: var(--color-azul);
-  --mutedForeground: var(--color-platino);
+  --muted: var(--color-ultravioleta);
+  --mutedForeground: var(--color-lila);
 
-  --card: var(--color-azul);
-  --cardForeground: var(--color-blanco);
+  --card: var(--color-ultravioleta);
+  --cardForeground: #ffffff;
 
-  --galleryImgBg: var(--color-azul);
+  --galleryImgBg: var(--color-ultravioleta-light);
 
   /* --- Navbar / Footer --- */
-  --navbarBg: rgba(11, 13, 18, 0.85);
-  --navbarBgHover: var(--color-azul);
-  --navbarText: var(--color-blanco);
-  --navbarTextMuted: var(--color-dorado);
+  --navbarBg: rgba(10, 6, 24, 0.78);
+  --navbarBgHover: var(--color-ultravioleta);
+  --navbarText: #ffffff;
+  --navbarTextMuted: var(--color-neon-cian);
 
-  --footerBg: var(--color-negro-deep);
-  --footerText: var(--color-blanco);
-  --footerTextMuted: var(--color-platino);
+  --footerBg: #060311;
+  --footerText: #ffffff;
+  --footerTextMuted: var(--color-lila);
+
+  /* --- Neón (solo dark: brillo real) --- */
+  --glow-primary: 0 0 6px rgba(255, 46, 154, 0.9), 0 0 22px rgba(255, 46, 154, 0.55), 0 0 48px rgba(255, 46, 154, 0.3);
+  --glow-accent: 0 0 6px rgba(0, 229, 255, 0.9), 0 0 22px rgba(0, 229, 255, 0.5), 0 0 48px rgba(0, 229, 255, 0.28);
+  --glow-box-primary: 0 0 0 1px rgba(255, 46, 154, 0.7), 0 0 24px rgba(255, 46, 154, 0.45);
+  --glow-box-accent: 0 0 0 1px rgba(0, 229, 255, 0.7), 0 0 24px rgba(0, 229, 255, 0.4);
+  --neon-text-primary: var(--color-neon-rosa);
+  --neon-text-accent: var(--color-neon-cian);
+
+  --glass-bg: rgba(21, 14, 46, 0.6);
+  --glass-border: rgba(189, 180, 230, 0.16);
+
+  --grid-line: rgba(0, 229, 255, 0.07);
+  --aurora-1: rgba(255, 46, 154, 0.22);
+  --aurora-2: rgba(0, 229, 255, 0.16);
+  --scanline: rgba(255, 255, 255, 0.025);
 }
 
 /* --- Tema Claro ---
-   Se activa con la clase .light o con data-theme="light" en <html> */
+   Se activa con la clase .light o con data-theme="light" en <html>.
+   El neón se mantiene en fondos de color (botones, chips, ecualizador);
+   el texto usa versiones más profundas para cumplir contraste. */
 .light,
 :root[data-theme="light"] {
   color-scheme: light;
 
   /* --- Semántica --- */
-  --background: var(--color-blanco) !important;
-  --foreground: var(--color-negro) !important;
+  --background: var(--color-escarcha) !important;
+  --foreground: var(--color-tinta) !important;
 
-  --bg: var(--color-blanco) !important;
-  --bgSecondary: var(--color-gris-claro) !important;
+  --bg: var(--color-escarcha) !important;
+  --bgSecondary: var(--color-escarcha-2) !important;
 
-  --text: var(--color-negro) !important;
-  --textSecondary: var(--color-slate-text) !important;
+  --text: var(--color-tinta) !important;
+  --textSecondary: var(--color-tinta-suave) !important;
 
-  --border: var(--color-gris-border) !important;
+  --border: var(--color-escarcha-border) !important;
 
-  --cardBg: var(--color-blanco) !important;
+  --cardBg: #ffffff !important;
 
   /* --- Colores de marca / acción --- */
-  --primary: var(--color-dorado) !important;
-  --primaryHover: var(--color-dorado-dark) !important;
-  --primaryForeground: var(--color-negro) !important;
+  --primary: var(--color-neon-rosa) !important;
+  --primaryHover: var(--color-neon-rosa-dark) !important;
+  --primaryForeground: var(--color-noche) !important;
 
-  --secondary: var(--color-azul) !important;
-  --secondaryHover: var(--color-azul-light) !important;
-  --secondaryForeground: var(--color-blanco) !important;
+  --secondary: var(--color-tinta) !important;
+  --secondaryHover: #2a1f55 !important;
+  --secondaryForeground: #ffffff !important;
 
-  --accent: var(--color-dorado-text) !important;
-  --accentForeground: var(--color-blanco) !important;
+  --accent: var(--color-cian-text) !important;
+  --accentForeground: #ffffff !important;
 
-  --muted: var(--color-gris-claro) !important;
-  --mutedForeground: var(--color-slate-text) !important;
+  --muted: var(--color-escarcha-2) !important;
+  --mutedForeground: var(--color-tinta-suave) !important;
 
-  --card: var(--color-blanco) !important;
-  --cardForeground: var(--color-negro) !important;
+  --card: #ffffff !important;
+  --cardForeground: var(--color-tinta) !important;
 
-  --galleryImgBg: var(--color-gris-claro) !important;
+  --galleryImgBg: var(--color-escarcha-2) !important;
 
   /* --- Navbar / Footer --- */
-  --navbarBg: rgba(255, 255, 255, 0.85) !important;
-  --navbarBgHover: rgba(255, 255, 255, 0.95) !important;
-  --navbarText: var(--color-negro) !important;
-  --navbarTextMuted: var(--color-dorado-text) !important;
+  --navbarBg: rgba(248, 246, 255, 0.82) !important;
+  --navbarBgHover: rgba(255, 255, 255, 0.96) !important;
+  --navbarText: var(--color-tinta) !important;
+  --navbarTextMuted: var(--color-rosa-text) !important;
 
-  --footerBg: var(--color-gris-claro) !important;
-  --footerText: var(--color-negro) !important;
-  --footerTextMuted: var(--color-slate-text) !important;
+  --footerBg: var(--color-tinta) !important;
+  --footerText: #ffffff !important;
+  --footerTextMuted: var(--color-lila) !important;
+
+  /* --- Neón en claro: sin halo de texto, sombras de color suaves --- */
+  --glow-primary: none;
+  --glow-accent: none;
+  --glow-box-primary: 0 6px 20px rgba(255, 46, 154, 0.35);
+  --glow-box-accent: 0 6px 20px rgba(0, 190, 220, 0.35);
+  --neon-text-primary: var(--color-rosa-text);
+  --neon-text-accent: var(--color-cian-text);
+
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(26, 18, 56, 0.1);
+
+  --grid-line: rgba(26, 18, 56, 0.06);
+  --aurora-1: rgba(255, 46, 154, 0.16);
+  --aurora-2: rgba(0, 229, 255, 0.2);
+  --scanline: rgba(26, 18, 56, 0.02);
 }
 
 @theme inline {
@@ -161,11 +217,19 @@
   --color-card: var(--card);
   --color-card-foreground: var(--cardForeground);
   --color-border: var(--border);
+  --color-neon-rosa: var(--color-neon-rosa);
+  --color-neon-cian: var(--color-neon-cian);
+  --color-neon-amarillo: var(--color-neon-amarillo);
+  --color-neon-lima: var(--color-neon-lima);
   --font-sans: var(--font-body-family);
   --font-serif: var(--font-heading-family);
-  --font-mono: var(--font-body-family);
+  --font-mono: var(--font-display-mono);
+  --radius-card: var(--radius-card);
 }
 
+/* ============================================================
+   BASE
+   ============================================================ */
 body {
   background: var(--background);
   color: var(--foreground);
@@ -173,10 +237,11 @@ body {
   font-style: var(--font-body-style);
   font-weight: var(--font-body-weight);
   font-size: calc(1rem * var(--font-body-scale));
+  line-height: 1.6;
   overflow-x: hidden;
   max-width: 100vw;
-  max-height: 100vh;
   transition: background-color 0.25s ease, color 0.25s ease;
+  -webkit-font-smoothing: antialiased;
 }
 
 h1,
@@ -190,6 +255,8 @@ h6,
   font-family: var(--font-heading-family);
   font-style: var(--font-heading-style);
   font-weight: var(--font-heading-weight);
+  letter-spacing: var(--font-heading-tracking);
+  line-height: 1.05;
 }
 
 strong,
@@ -219,6 +286,240 @@ nav h5,
 nav h6 {
   font-family: var(--font-navbar-heading-family);
 }
+
+::selection {
+  background: var(--color-neon-rosa);
+  color: var(--color-noche);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-neon-cian);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.light :focus-visible,
+:root[data-theme="light"] :focus-visible {
+  outline-color: var(--color-rosa-text);
+}
+
+/* Scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-neon-rosa) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-neon-rosa);
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--background);
+}
+
+/* ============================================================
+   NEÓN — texto y bordes
+   ============================================================ */
+.neon-text {
+  color: var(--neon-text-primary);
+  text-shadow: var(--glow-primary);
+}
+
+.neon-text-accent {
+  color: var(--neon-text-accent);
+  text-shadow: var(--glow-accent);
+}
+
+/* Tubo de neón apagándose y encendiéndose (usar en UN solo titular) */
+.neon-flicker {
+  animation: neon-flicker 5s linear infinite;
+}
+
+.neon-border {
+  border: 1px solid var(--color-neon-rosa);
+  box-shadow: var(--glow-box-primary);
+}
+
+.neon-border-accent {
+  border: 1px solid var(--color-neon-cian);
+  box-shadow: var(--glow-box-accent);
+}
+
+.btn-neon {
+  background: var(--primary);
+  color: var(--primaryForeground);
+  font-weight: var(--font-body-weight-bold);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--glow-box-primary);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+.btn-neon:hover {
+  background: var(--primaryHover);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.btn-neon:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ============================================================
+   SUPERFICIES
+   ============================================================ */
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-radius: var(--radius-card);
+}
+
+.card-radio {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-radio:hover {
+  border-color: var(--color-neon-rosa);
+  box-shadow: var(--glow-box-primary);
+}
+
+/* Fondo con aurora neón + rejilla tipo dial */
+.bg-aurora {
+  background:
+    radial-gradient(60% 50% at 15% 10%, var(--aurora-1), transparent 70%),
+    radial-gradient(55% 45% at 90% 20%, var(--aurora-2), transparent 70%),
+    var(--background);
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.scanlines {
+  position: relative;
+}
+
+.scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg, var(--scanline) 0 1px, transparent 1px 3px);
+}
+
+/* Franja tricolor de Ecuador (separador de marca) */
+.stripe-ec {
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--ec-amarillo) 0 50%,
+    var(--ec-azul) 50% 75%,
+    var(--ec-rojo) 75% 100%
+  );
+}
+
+/* ============================================================
+   ELEMENTOS DE RADIO
+   ============================================================ */
+
+/* Pantalla de frecuencia: <span class="freq">98.5 FM</span> */
+.freq {
+  font-family: var(--font-display-mono);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--neon-text-accent);
+  text-shadow: var(--glow-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Indicador EN VIVO: <span class="on-air"><i class="on-air-dot"></i>En vivo</span> */
+.on-air {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-pill);
+  background: var(--primary);
+  color: var(--primaryForeground);
+  font-weight: var(--font-body-weight-bold);
+  font-size: 0.8rem;
+  box-shadow: var(--glow-box-primary);
+}
+
+.on-air-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: currentColor;
+  animation: on-air-pulse 1.4s ease-in-out infinite;
+}
+
+/* Ecualizador: <div class="eq"><span/><span/><span/><span/><span/></div>
+   Pausar con la clase .eq-paused cuando no suena la radio */
+.eq {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 1.5rem;
+}
+
+.eq span {
+  width: 4px;
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(to top, var(--color-neon-rosa), var(--color-neon-cian));
+  transform-origin: bottom;
+  animation: eq-bounce 1s ease-in-out infinite;
+}
+
+.eq span:nth-child(1) { animation-duration: 0.9s; }
+.eq span:nth-child(2) { animation-duration: 1.2s; animation-delay: -0.3s; }
+.eq span:nth-child(3) { animation-duration: 0.7s; animation-delay: -0.5s; }
+.eq span:nth-child(4) { animation-duration: 1.1s; animation-delay: -0.2s; }
+.eq span:nth-child(5) { animation-duration: 0.8s; animation-delay: -0.7s; }
+
+.eq-paused span {
+  animation-play-state: paused;
+  transform: scaleY(0.2);
+}
+
+/* Disco de vinilo / portada que gira al reproducir: .vinyl + .vinyl-spin */
+.vinyl-spin {
+  animation: vinyl-spin 6s linear infinite;
+}
+
+/* Cinta de texto en movimiento para anuncios y programación */
+.marquee {
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-track {
+  display: flex;
+  flex-shrink: 0;
+  gap: 3rem;
+  padding-right: 3rem;
+  animation: marquee 28s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ============================================================
+   ANIMACIONES
+   ============================================================ */
 
 /* Animación 3D de rotación para skeletons */
 .skeleton-3d {
@@ -261,6 +562,46 @@ nav h6 {
 
 .animate-loadingSteps {
   animation: loadingSteps 0.9s steps(4) infinite;
+}
+
+@keyframes eq-bounce {
+  0%, 100% { transform: scaleY(0.2); }
+  50% { transform: scaleY(1); }
+}
+
+@keyframes on-air-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.7); }
+}
+
+@keyframes vinyl-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes marquee {
+  to { transform: translateX(-100%); }
+}
+
+@keyframes neon-flicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
+  20%, 24%, 55% { opacity: 0.45; }
+}
+
+/* Respetar a quienes prefieren menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .eq span,
+  .on-air-dot,
+  .vinyl-spin,
+  .marquee-track,
+  .neon-flicker,
+  .skeleton-3d,
+  .animate-loadingSteps {
+    animation: none !important;
+  }
+  .btn-neon,
+  .card-radio {
+    transition: none;
+  }
 }
 
 /* Evitar desbordamiento horizontal en móviles */

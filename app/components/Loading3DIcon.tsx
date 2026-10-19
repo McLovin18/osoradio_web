@@ -9,7 +9,7 @@ export function Loading3DIcon() {
 
       {/* CONTENEDOR */}
       <div
-        className="relative w-40 h-40 flex items-center justify-center"
+        className="relative w-60 h-60 flex items-center justify-center"
         style={{ perspective: "1000px" }}
       >
 
@@ -41,13 +41,12 @@ export function Loading3DIcon() {
           style={{ animationDuration: "2.5s" }}
         />
 
-        {/* Balde flotando y rotando en 3D */}
         <div
-          className="relative w-24 h-24 balde-spin"
+          className="relative w-48 h-48 balde-spin"
           style={{ transformStyle: "preserve-3d" }}
         >
           <Image
-            src="/imw-light.png"
+            src="/oso.png"
             alt="Balde de la marca"
             fill
             className="object-contain drop-shadow-[0_18px_22px_rgba(0,0,0,0.30)]"
@@ -57,28 +56,6 @@ export function Loading3DIcon() {
 
         {/* Sombra de contacto que "respira" con el giro */}
         <div className="absolute -bottom-3 w-20 h-3 bg-black/25 rounded-full blur-md balde-shadow" />
-      </div>
-
-      {/* Texto */}
-      <div className="mt-6 flex flex-col items-center">
-
-        <span className="
-          text-[11px]
-          font-bold
-          tracking-[0.35em]
-          uppercase
-          text-black
-        ">
-          IMW
-        </span>
-
-        <div className="flex gap-1.5 mt-3 items-center">
-          <div className="flex gap-1.5 animate-loadingSteps">
-            <div className="w-1.5 h-1.5 rounded-full bg-black" />
-            <div className="w-1.5 h-1.5 rounded-full bg-black" />
-            <div className="w-1.5 h-1.5 rounded-full bg-black" />
-          </div>
-        </div>
       </div>
     </div>
   );

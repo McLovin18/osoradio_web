@@ -14,6 +14,8 @@ import {
   limit
 } from "firebase/firestore";
 
+const COLLECTION = "productos";
+
 // Tipos
 export interface StockVariant {
   talla?: string;
@@ -151,8 +153,6 @@ export async function obtenerProductosPorSubsubcategoria(subsubcategoria, subcat
   if (excludeId) productos = productos.filter(p => p.id !== excludeId);
   return productos;
 }
-
-const COLLECTION = "productos";
 
 // Obtener productos por bodega
 export async function obtenerProductosPorBodega(bodegaId: string, opts: any = {}) {

@@ -17,9 +17,9 @@ export const revalidate = 1800;
 // Cambiar cuando tengas el dominio
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ||
-  "https://imw_ec.com";
+  "https://radiooso.ec";
 
-const SITE_NAME = "IMW - In My Wardrobe";
+const SITE_NAME = "Radio Oso - 98.5 FM";
 
 const barlowCondensed = Barlow_Condensed({
   subsets: ["latin"],
@@ -47,20 +47,22 @@ const themeInitScript = `
 
 export const metadata: Metadata = {
   title: {
-    default: "IMW - In My Wardrobe | Perfumes originales importados desde USA",
-    template: "%s | IMW",
+    default: "Radio Oso - 98.5 FM Ecuador | La mejor música en tu sintonía",
+    template: "%s | Radio Oso",
   },
 
   description:
-    "Tienda online de perfumes originales importados desde USA. Productos 100% originales con envíos a todo Ecuador por Servientrega.",
+    "Radio Oso - Emisora de radio en Ecuador transmitiendo en 98.5 FM. Programas en vivo, la mejor música 24/7 y contenido de entretenimiento.",
 
   keywords: [
-    "Perfumes originales",
-    "Perfumes importados",
-    "Perfumes USA",
-    "Tienda de perfumes online",
-    "Perfumes Ecuador",
-    "Envíos a todo Ecuador",
+    "Radio Oso",
+    "98.5 FM Ecuador",
+    "Radio Ecuador",
+    "Emisora de radio",
+    "Programas en vivo",
+    "Música en vivo",
+    "Locutores",
+    "Noticias Ecuador",
   ],
 
   creator: SITE_NAME,
@@ -83,17 +85,17 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: SITE_NAME,
 
-    title: "IMW - In My Wardrobe | Perfumes originales importados desde USA",
+    title: "Radio Oso - 98.5 FM Ecuador | La mejor música en tu sintonía",
 
     description:
-      "Tienda online de perfumes originales importados desde USA. Productos 100% originales con envíos a todo Ecuador por Servientrega.",
+      "Radio Oso - Emisora de radio en Ecuador transmitiendo en 98.5 FM. Programas en vivo, la mejor música 24/7 y contenido de entretenimiento.",
 
     images: [
       {
         url: `${SITE_URL}/og-image.jpg`,
         width: 1200,
         height: 630,
-        alt: "IMW - In My Wardrobe",
+        alt: "Radio Oso - 98.5 FM",
       },
     ],
   },
@@ -101,10 +103,10 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
 
-    title: "IMW - In My Wardrobe | Perfumes originales importados desde USA",
+    title: "Radio Oso - 98.5 FM Ecuador | La mejor música en tu sintonía",
 
     description:
-      "Tienda online de perfumes originales importados desde USA. Productos 100% originales con envíos a todo Ecuador por Servientrega.",
+      "Radio Oso - Emisora de radio en Ecuador transmitiendo en 98.5 FM. Programas en vivo, la mejor música 24/7 y contenido de entretenimiento.",
 
     images: [`${SITE_URL}/twitter-image.jpg`],
   },
@@ -136,7 +138,7 @@ export const metadata: Metadata = {
     title: SITE_NAME,
   },
 
-  category: "Tienda de perfumes",
+  category: "Emisora de radio",
 };
 
 export const viewport: Viewport = {
