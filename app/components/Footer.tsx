@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useTracking } from "../lib/useAnalytics";
-import WhatsAppFloatingButton from "./WhatsAppFloatingButton";
 import styles from "./Footer.module.css";
 import { themeManager } from "./themeManager";
 
@@ -232,12 +231,6 @@ const Footer: React.FC = () => {
         </div>
       </footer>
 
-      {showWhatsAppFloating && (
-        <WhatsAppFloatingButton
-          phoneNumber={WHATSAPP_NUMBER}
-          message="Hola, quiero información sobre Radio Oso"
-        />
-      )}
     </>
   );
 };
