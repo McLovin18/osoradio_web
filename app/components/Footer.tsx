@@ -77,7 +77,6 @@ const PayMaestro = () => (
 const WHATSAPP_NUMBER = "593995359762"; // solo números, con código de país, sin '+' ni espacios
 const WHATSAPP_DISPLAY = "+593 99 535 9762"; // como se muestra al usuario
 const INSTAGRAM_URL = "https://www.instagram.com/oso.radio/";
-const FACEBOOK_URL = "https://www.facebook.com/radiooso_ec";
 const TIKTOK_URL = "https://www.tiktok.com/@oso.radio";
 const DEV_INSTAGRAM_URL = "https://www.instagram.com/hector.cobena/";
 
