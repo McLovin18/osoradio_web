@@ -266,7 +266,6 @@ export const Navbar = () => {
     { href: "/programas", label: "Programas" },
     { href: "/interlocutores", label: "Interlocutores" },
     { href: "/blogs", label: "Noticias" },
-    { href: "/contacto", label: "Contacto" },
   ];
 
   const infoSliderItems = [

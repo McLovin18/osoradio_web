@@ -74,11 +74,11 @@ const PayMaestro = () => (
 
 /* ---------------- Datos del negocio ---------------- */
 
-const WHATSAPP_NUMBER = "593968514889"; // solo números, con código de país, sin '+' ni espacios
-const WHATSAPP_DISPLAY = "0968514889"; // como se muestra al usuario
-const INSTAGRAM_URL = "https://www.instagram.com/radiooso_ec/";
+const WHATSAPP_NUMBER = "593995359762"; // solo números, con código de país, sin '+' ni espacios
+const WHATSAPP_DISPLAY = "+593 99 535 9762"; // como se muestra al usuario
+const INSTAGRAM_URL = "https://www.instagram.com/oso.radio/";
 const FACEBOOK_URL = "https://www.facebook.com/radiooso_ec";
-const TIKTOK_URL = "https://www.tiktok.com/@radiooso_ec";
+const TIKTOK_URL = "https://www.tiktok.com/@oso.radio";
 const DEV_INSTAGRAM_URL = "https://www.instagram.com/hector.cobena/";
 
 const socialLinks = [
@@ -90,8 +90,7 @@ const socialLinks = [
 const helpLinks = [
   { href: "/programacion", label: "Programación" },
   { href: "/locutores", label: "Locutores" },
-  { href: "/noticias", label: "Noticias" },
-  { href: "/contacto", label: "Contacto" },
+  { href: "/blogs", label: "Noticias" },
 ];
 
 const policyLinks = [

@@ -107,7 +107,7 @@ export default function BlogsPage() {
                     )}
                     <div className="inline-flex items-center gap-1 text-sm neon-text-accent mt-1 w-fit">
                       <span className="material-icons-round text-base">visibility</span>
-                      <span>Leer noticia completa</span>
+                      <span>Leer noticia copleta</span>
                     </div>
                   </div>
                 </button>
