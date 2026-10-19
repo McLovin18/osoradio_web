@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { getPublishedBlogs } from "../lib/blogs-db";
 import { useTracking } from "../lib/useAnalytics";
 import type { Blog } from "../lib/blog-types";
-import BottomBarPublic from "../components/BottomBarPublic";
 
 export default function BlogsPage() {
   const router = useRouter();
@@ -163,7 +162,6 @@ export default function BlogsPage() {
           </>
         )}
       </main>
-      <BottomBarPublic />
     </div>
   );
 }

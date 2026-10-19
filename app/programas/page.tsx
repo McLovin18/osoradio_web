@@ -3,7 +3,6 @@ import { useEffect, useState, useMemo } from "react";
 import ProductoCard from "../components/ProductoCard";
 import { obtenerProductos } from "../lib/productos-db";
 import type { Producto } from "../lib/productos-db";
-import BottomBarPublic from "../components/BottomBarPublic";
 
 export default function ProgramasPage() {
   const [contenido, setContenido] = useState<Producto[]>([]);
@@ -79,7 +78,6 @@ export default function ProgramasPage() {
           </div>
         )}
       </main>
-      <BottomBarPublic />
     </div>
   );
 }

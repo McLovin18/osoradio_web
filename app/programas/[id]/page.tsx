@@ -1,11 +1,10 @@
 "use client";
-
+import RadioPlayer from "../../components/StreammingButton";
 import { obtenerProductoPorId } from "../../lib/productos-db";
 import { Loading3DIcon } from "../../components/Loading3DIcon";
 import React, { useState, useEffect, use } from "react";
 import { useUser } from "../../context/UserContext";
 import { useToast } from "../../context/ToastContext";
-import BottomBarPublic from "../../components/BottomBarPublic";
 import ProgramaComments from "../../components/ProgramaComments";
 import dynamic from "next/dynamic";
 
@@ -79,7 +78,7 @@ export default function ProgramaDetailPage({ params }: { params: Promise<{ id: s
 
         <div className="grid gap-8 lg:grid-cols-2">
           {/* Imágenes */}
-          <div>
+          <div className="order-1 lg:order-1">
             <div className="rounded-2xl overflow-hidden border" style={{ borderColor: "var(--border)" }}>
               {imagenes.length > 0 ? (
                 <img
@@ -118,8 +117,13 @@ export default function ProgramaDetailPage({ params }: { params: Promise<{ id: s
             )}
           </div>
 
+          {/* Botón de streaming - en móvil entre imágenes e información */}
+          <div className="order-2 lg:hidden flex justify-center py-6">
+            <RadioPlayer />
+          </div>
+
           {/* Información */}
-          <div className="space-y-6">
+          <div className="space-y-6 order-3 lg:order-2">
             {/* Descripción */}
             <div className="rounded-2xl border p-6" style={{ borderColor: "var(--border)", background: "var(--cardBg)" }}>
               <h2 className="text-xl font-bold mb-4">Sobre el programa</h2>
@@ -166,12 +170,16 @@ export default function ProgramaDetailPage({ params }: { params: Promise<{ id: s
           </div>
         </div>
 
+        {/* Botón de streaming centrado para desktop */}
+        <div className="hidden lg:flex justify-center mt-12 mb-8">
+          <RadioPlayer />
+        </div>
+
         {/* Sección de comentarios en vivo */}
         <div className="mt-12">
           <ProgramaComments programaId={programa.id} />
         </div>
       </main>
-      <BottomBarPublic />
     </div>
   );
 }

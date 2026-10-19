@@ -5,7 +5,6 @@ import { Loading3DIcon } from "../../components/Loading3DIcon";
 import React, { useState, useEffect } from "react";
 import { useUser } from "../../context/UserContext";
 import { useToast } from "../../context/ToastContext";
-import BottomBarPublic from "../../components/BottomBarPublic";
 import dynamic from "next/dynamic";
 
 const Markdown = dynamic(() => import("../../components/Markdown"), { ssr: false });
@@ -164,7 +163,6 @@ export default function InterlocutorDetailPage({ params }) {
           </div>
         </div>
       </main>
-      <BottomBarPublic />
     </div>
   );
 }

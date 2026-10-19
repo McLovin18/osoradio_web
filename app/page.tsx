@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState, Suspense } from "react";
 
-import BottomBarPublic from "./components/BottomBarPublic";
 import WhatsAppFloatingButton from "./components/WhatsAppFloatingButton";
 import { SectionRenderer } from "./landing/sectionRegistry";
 import { getLandingPage } from "./lib/landing-db";
@@ -243,7 +242,6 @@ const lastHeroIndex = useMemo(() => {
           </div>
         )}
       </main>
-      {!isLogged && <BottomBarPublic />}
     </>
   );
 }
