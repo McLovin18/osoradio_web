@@ -3,11 +3,15 @@
 import { useRef, useState } from "react";
 import { Play, Pause, Radio, Loader2 } from "lucide-react";
 
-const STREAM_URL = "https://radiostreaming.pro/8462/stream";
+const STREAM_URL = "https://radiostreaming.pro/8466/stream";
 
 type Status = "idle" | "loading" | "playing" | "offline";
 
-export default function RadioPlayer() {
+interface RadioPlayerProps {
+  buttonText?: string;
+}
+
+export default function RadioPlayer({ buttonText = "Escuchar en vivo" }: RadioPlayerProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [status, setStatus] = useState<Status>("idle");
 
@@ -71,7 +75,7 @@ export default function RadioPlayer() {
             ? "Conectando..."
             : status === "playing"
             ? "Pausar"
-            : "Escuchar en vivo"}
+            : buttonText}
         </span>
       </button>
 

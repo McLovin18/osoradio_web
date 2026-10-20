@@ -116,14 +116,11 @@ const Footer: React.FC = () => {
           {/* Marca + descripción */}
           <div className={styles.ftIntro}>
             <h2 className={styles.ftBrand} style={{ color: "var(--text)" }}>
-              Radio Oso - 98.5 FM
+              Oso Radio / JC Radio La Bruja 98.5FM Guayaquil
             </h2>
             <p className={styles.ftIntroText} style={{ color: "var(--textSecondary)" }}>
-              📻 Emisora de radio en Ecuador 🇪�
-              �️ Programas en vivo
-              🎵 La mejor música 24/7
-              📲 Contáctanos al 0968514889
-              📍 Sintonía 98.5 FM
+              Haciendo fácil lo que parece complicado.
+              
             </p>
           </div>
 
@@ -146,7 +143,7 @@ const Footer: React.FC = () => {
 
                 {/* Correo de contacto */}
                 <a
-                  href="mailto:contacto@radiooso.ec"
+                  href="mailto:oso.radio593@gmail.com"
                   className={styles.ftWhatsappLine}
                   style={{ color: "var(--textSecondary)" }}
                   onClick={() => trackLinkClick().catch(console.error)}
@@ -154,7 +151,7 @@ const Footer: React.FC = () => {
                   <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
                     <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                   </svg>
-                  <span>contacto@radiooso.ec</span>
+                  <span>oso.radio593@gmail.com</span>
                 </a>
               </div>
             </div>

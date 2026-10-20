@@ -1,5 +1,4 @@
 "use client";
-import RadioPlayer from "../../components/StreammingButton";
 import { obtenerProductoPorId } from "../../lib/productos-db";
 import { Loading3DIcon } from "../../components/Loading3DIcon";
 import React, { useState, useEffect, use } from "react";
@@ -117,13 +116,8 @@ export default function ProgramaDetailPage({ params }: { params: Promise<{ id: s
             )}
           </div>
 
-          {/* Botón de streaming - en móvil entre imágenes e información */}
-          <div className="order-2 lg:hidden flex justify-center py-6">
-            <RadioPlayer />
-          </div>
-
           {/* Información */}
-          <div className="space-y-6 order-3 lg:order-2">
+          <div className="space-y-6 order-2 lg:order-2">
             {/* Descripción */}
             <div className="rounded-2xl border p-6" style={{ borderColor: "var(--border)", background: "var(--cardBg)" }}>
               <h2 className="text-xl font-bold mb-4">Sobre el programa</h2>
@@ -168,11 +162,6 @@ export default function ProgramaDetailPage({ params }: { params: Promise<{ id: s
               </button>
             )}
           </div>
-        </div>
-
-        {/* Botón de streaming centrado para desktop */}
-        <div className="hidden lg:flex justify-center mt-12 mb-8">
-          <RadioPlayer />
         </div>
 
         {/* Sección de comentarios en vivo */}

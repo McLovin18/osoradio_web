@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import RadioPlayer from "../../components/StreammingButton";
 import type {
   LandingSectionStyles,
   LandingFieldStyle,
@@ -480,19 +481,15 @@ export default function HeroSection({
         )}
 
         {fieldPositions?.buttonText && current.buttonText && (
-          <a
-            href={current.buttonLink || "/products-by-category"}
+          <div
             style={{
               position: "absolute",
-              background: "var(--cardBg)",
-              color: "var(--text)",
               ...buttonTextStyle,
             }}
-            className="absolute inline-flex items-center gap-1 sm:gap-2 hover:bg-[var(--bgSecondary)] font-bold text-[9px] sm:text-2xl px- py-1.5 sm:px-1 sm:py-4 rounded-2xl shadow-lg transition-all hover:scale-105 active:scale-95"
+            className="absolute"
           >
-            <span>{current.buttonText}</span>
-            <span className="material-icons-round text-xs sm:text-sm">arrow_forward</span>
-          </a>
+            <RadioPlayer buttonText={current.buttonText} />
+          </div>
         )}
 
         {/* Flechas de navegación */}
@@ -521,7 +518,7 @@ export default function HeroSection({
 
         {/* Contenido textual por defecto (sin posicionamiento personalizado) */}
         {!fieldPositions?.badge && !fieldPositions?.title && !fieldPositions?.subtitle && (
-          <div className="absolute inset-x-0 bottom-0 z-20 flex flex-col items-center sm:items-center lg:items-start px-2 sm:px-8 pb-5 sm:pb-8 gap-1.5 sm:gap-3 w-full">
+          <div className="absolute inset-x-0 bottom-0 z-20 flex flex-col items-center px-2 sm:px-8 pb-5 sm:pb-8 gap-1.5 sm:gap-3 w-full">
             {current.badge && (
               <span
                 style={{
@@ -561,18 +558,9 @@ export default function HeroSection({
               </p>
             )}
             {current.buttonText && (
-              <a
-                href={current.buttonLink || "/products-by-category"}
-                style={{
-                  background: "var(--cardBg)",
-                  color: "var(--text)",
-                  ...defaultButtonInlineStyle,
-                  ...buttonTextStyle
-                }}
-                className="inline-flex items-center gap-2 mt-3 sm:mt-6 hover:bg-[var(--bgSecondary)] mx-auto font-bold text-[9px] sm:text-2xl px-3 py-1.5 sm:px-4 sm:py-3 rounded-2xl shadow-lg transition-all hover:scale-105 active:scale-95 whitespace-nowrap"
-              >
-                <span>{current.buttonText}</span>
-              </a>
+              <div className="mt-3 sm:mt-6 w-full flex justify-center">
+                <RadioPlayer buttonText={current.buttonText} />
+              </div>
             )}
           </div>
         )}
