@@ -770,11 +770,7 @@ export const Navbar = () => {
                 </Link>
               ))}
 
-              {/* Categorías en acordeón */}
-              <MobileCategoriesAccordion basePath={basePath} />
-
               {/* Divisor */}
-              <div className="border-t my-2" style={{ borderColor: theme === "light" ? "#e2e8f0" : "rgba(255,255,255,0.1)" }} />
               <div className="border-t my-2" style={{ borderColor: theme === "light" ? "#e2e8f0" : "rgba(255,255,255,0.1)" }} />
 
               {/* Usuario - Opciones si está autenticado */}
