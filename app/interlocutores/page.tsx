@@ -41,7 +41,7 @@ export default function InterlocutoresPage() {
             <span className="material-icons-round text-4xl" style={{ color: "var(--color-neon-cian)" }}>mic</span>
             <h1 className="text-4xl sm:text-5xl font-heading font-bold neon-text">Nuestros Interlocutores</h1>
           </div>
-          <p className="text-lg" style={{ color: "var(--textSecondary)" }}>Conoce a las voces de <span className="freq">98.5 FM</span></p>
+          <p className="text-lg" style={{ color: "var(--textSecondary)" }}>Conoce a las voces de <span className="freq">OSO RADIO</span></p>
         </div>
 
         {loading ? (

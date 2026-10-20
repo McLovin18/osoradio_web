@@ -80,7 +80,7 @@ const socialLinks = [
 
 const helpLinks = [
   { href: "/programacion", label: "Programación" },
-  { href: "/locutores", label: "Locutores" },
+  { href: "/interlocutores", label: "Interlocutores" },
   { href: "/blogs", label: "Noticias" },
 ];
 
