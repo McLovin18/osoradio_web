@@ -760,14 +760,14 @@ export const Navbar = () => {
 
               {/* Links */}
               {links.map((link) => (
-                <a
+                <Link
                   key={link.href}
                   href={link.href}
                   className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors"
                   style={{ color: theme === "light" ? "#0f172a" : "#ffffff" }}
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
 
               {/* Categorías en acordeón */}
