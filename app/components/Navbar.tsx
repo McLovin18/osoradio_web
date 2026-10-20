@@ -301,7 +301,7 @@ export const Navbar = () => {
       >
         {/* ── Header principal ── */}
         <div
-          className="relative flex items-center justify-between gap-4 px-4 py-2 lg:px-6 lg:py-2"
+          className="relative flex items-center justify-between gap-4 px-4 py-3 lg:px-6 lg:py-3"
           style={{ color: theme === "light" ? "#0f172a" : "#ffffff" }}
         >
           <div className="flex items-center gap-3 shrink-0">
@@ -337,9 +337,9 @@ export const Navbar = () => {
               <Image
                 src={logoSrc}
                 alt="Radio Oso"
-                width={180}
-                height={48}
-                className="h-12 w-auto"
+                width={240}
+                height={64}
+                className="h-16 w-auto"
                 priority
               />
             </a>

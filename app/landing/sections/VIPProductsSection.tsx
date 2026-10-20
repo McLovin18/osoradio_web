@@ -88,9 +88,9 @@ export default function VIPProductsSection({
                     className="inline-block px-4 py-2 rounded-full text-sm font-semibold"
                     style={{
                       ...(fieldStyles?.badge || {}),
-                      color: isLight ? "#0f172a" : "#ffffff",
-                      backgroundColor: isLight ? "rgba(224, 161, 26, 0.15)" : "rgba(224, 161, 26, 0.2)",
-                      borderColor: isLight ? "#e2e8f0" : "rgba(224, 161, 26, 0.3)",
+                      color: isLight ? "#141414" : "#000000",
+                      backgroundColor: isLight ? "#e2e8f0" : "rgb(247, 243, 3)",
+                      borderColor: isLight ? "#e2e8f0" : "rgb(247, 243, 3)",
                       borderWidth: "1px",
                       borderStyle: "solid",
                     }}
