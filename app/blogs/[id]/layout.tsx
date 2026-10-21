@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getBlogById } from "../../lib/blogs-db";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://marcaestilo.com";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "osoradio.org";
 
 // ISR: Revalidar cada hora (3600 segundos)
 // Significa que la página se cachea por 1 hora, después se regenera
@@ -52,19 +52,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     if (!blog) {
       return {
-        title: "Artículo no encontrado | Marca Estilo",
+        title: "Artículo no encontrado | OSO RADIO",
         description: "El artículo que buscas no existe.",
       };
     }
 
     const description =
-      blog.excerpt || blog.content?.substring(0, 160) || "Artículo de Marca Estilo";
+      blog.excerpt || blog.content?.substring(0, 160) || "Noticias de OSO RADIO";
     const imageUrl = blog.image || `${SITE_URL}/default-blog-image.jpg`;
 
     return {
-      title: `${blog.title} | Marca Estilo`,
+      title: `${blog.title} | OSO RADIO`,
       description: description,
-      keywords: blog.tags || ["camisetas", "moda masculina", "Marca Estilo"],
+      keywords: blog.tags || ["Radio", "Transmisión en 98.5FM", "OSO RADIO"],
       openGraph: {
         type: "article",
         url: `${SITE_URL}/blogs/${id}`,
@@ -80,7 +80,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         ],
         publishedTime: convertToISOString(blog.createdAt),
         modifiedTime: convertToISOString(blog.updatedAt),
-        authors: [blog.author || "Marca Estilo"],
+        authors: [blog.author || "OSO RADIO"],
       },
       twitter: {
         card: "summary_large_image",
@@ -95,7 +95,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   } catch (error) {
     console.error("Error generando metadata del blog:", error);
     return {
-      title: "Artículo | Marca Estilo",
+      title: "Artículo | OSO RADIO",
       description: "Cargando artículo...",
     };
   }

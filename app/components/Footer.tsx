@@ -199,7 +199,7 @@ const Footer: React.FC = () => {
           {/* Copyright + créditos */}
           <div className={styles.ftCopyRow}>
             <p className={styles.ftCopyText} style={{ color: isLight ? "#64748b" : "#cccccc" }}>
-              © {new Date().getFullYear()} Radio Oso - 98.5 FM. Todos los derechos reservados.
+              © {new Date().getFullYear()} Radio Oso. Todos los derechos reservados.
             </p>
             <div className={styles.ftCopyRight}>
               <div
@@ -211,7 +211,7 @@ const Footer: React.FC = () => {
                 }}
               >
                 <div className={styles.ftBadgeDot} />
-                Transmitiendo en 98.5 FM
+                Transmitiendo en OSO RADIO
               </div>
               <a
                 href={DEV_INSTAGRAM_URL}

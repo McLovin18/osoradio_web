@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Play, Pause, Radio, Loader2 } from "lucide-react";
 
 const STREAM_URL = "https://radiostreaming.pro/8466/stream";
@@ -14,6 +14,91 @@ interface RadioPlayerProps {
 export default function RadioPlayer({ buttonText = "Escuchar en vivo" }: RadioPlayerProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [status, setStatus] = useState<Status>("idle");
+  const [activeListeners, setActiveListeners] = useState<number>(0);
+  const sessionId = useRef<string>(`listener_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
+  const isRegistered = useRef<boolean>(false);
+
+  // Registrar oyente cuando empieza a escuchar
+  const registerListener = async () => {
+    try {
+      await fetch("/api/radio/listeners", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionId: sessionId.current }),
+      });
+    } catch (error) {
+      console.error("Error registrando oyente:", error);
+    }
+  };
+
+  // Eliminar registro de oyente cuando deja de escuchar
+  const unregisterListener = async () => {
+    try {
+      await fetch(`/api/radio/listeners?sessionId=${sessionId.current}`, {
+        method: "DELETE",
+      });
+    } catch (error) {
+      console.error("Error eliminando registro de oyente:", error);
+    }
+  };
+
+  // Enviar heartbeat para mantener lastSeen actualizado
+  const sendHeartbeat = async () => {
+    try {
+      await fetch("/api/radio/listeners", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionId: sessionId.current }),
+      });
+    } catch (error) {
+      console.error("Error enviando heartbeat:", error);
+    }
+  };
+
+  // Obtener número de oyentes activos
+  const fetchActiveListeners = async () => {
+    try {
+      const res = await fetch(`/api/radio/listeners?t=${Date.now()}`, {
+        cache: 'no-store',
+      });
+      if (!res.ok) {
+        setActiveListeners(0);
+        return;
+      }
+      const data = await res.json();
+      setActiveListeners(data.activeListeners || 0);
+    } catch (error) {
+      console.error("Error obteniendo oyentes activos:", error);
+      setActiveListeners(0);
+    }
+  };
+
+  // Actualizar oyentes activos cada 2 segundos (tiempo real)
+  useEffect(() => {
+    fetchActiveListeners();
+    const interval = setInterval(fetchActiveListeners, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Registrar/deregistrar oyente según estado
+  useEffect(() => {
+    if (status === "playing" && !isRegistered.current) {
+      // Registrar oyente
+      registerListener();
+      isRegistered.current = true;
+
+      // Enviar heartbeat cada 2 segundos mientras está escuchando
+      const heartbeatInterval = setInterval(sendHeartbeat, 2000);
+
+      return () => {
+        clearInterval(heartbeatInterval);
+      };
+    } else if (status !== "playing" && isRegistered.current) {
+      // Eliminar registro de oyente
+      unregisterListener();
+      isRegistered.current = false;
+    }
+  }, [status]);
 
   const toggle = async () => {
     const audio = audioRef.current;
@@ -91,6 +176,10 @@ export default function RadioPlayer({ buttonText = "Escuchar en vivo" }: RadioPl
           <span>EN VIVO</span>
         </div>
       )}
+
+      <div className="text-sm font-medium" style={{ color: "var(--textSecondary)" }}>
+        En vivo: {activeListeners}
+      </div>
 
       {status === "offline" && (
         <p className="text-sm text-center" style={{ color: "var(--textSecondary)" }}>

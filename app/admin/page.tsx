@@ -40,11 +40,13 @@ export default function AdminPage() {
 		productosVendidos: number;
 		productosSinStock: Producto[];
 		ordenesHoy: Orden[];
+		radioListenersToday: number;
 	}>({
 		totalVentas: 0,
 		productosVendidos: 0,
 		productosSinStock: [],
 		ordenesHoy: [],
+		radioListenersToday: 0,
 	});
 	const router = useRouter();
 	const today = getTodayYMD();
@@ -57,9 +59,10 @@ export default function AdminPage() {
 			setLoading(true);
 			setError("");
 			try {
-				const [ordenesRaw, productosRaw] = await Promise.all([
+				const [ordenesRaw, productosRaw, radioStats] = await Promise.all([
 					obtenerTodasOrdenes(),
 					obtenerProductos({ incluirSinStock: true }),
+					fetch("/api/radio/listeners").then(res => res.json()).catch(() => ({ totalToday: 0 })),
 				]);
 
 				const ordenes = ordenesRaw as Orden[];
@@ -89,7 +92,13 @@ export default function AdminPage() {
 						o.estado !== "cancelada"
 				);
 
-				setStats({ totalVentas, productosVendidos, productosSinStock, ordenesHoy });
+				setStats({
+					totalVentas,
+					productosVendidos,
+					productosSinStock,
+					ordenesHoy,
+					radioListenersToday: radioStats.totalToday || 0,
+				});
 			} catch (e) {
 				setError("Error al cargar estadísticas. Intenta de nuevo.");
 			} finally {
@@ -136,7 +145,7 @@ export default function AdminPage() {
 						<AnalyticsWidget />
 
 						{/* Stats Cards Grid */}
-						<div className="grid grid-cols-3 gap-4">
+						<div className="grid grid-cols-4 gap-4">
 							{/* Total Ventas */}
 							<div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4 cursor-pointer hover:border-purple-400 dark:hover:border-purple-600 transition-colors">
 								<p className="text-xs text-slate-400 dark:text-slate-500 mb-1">Ventas totales hoy</p>
@@ -150,6 +159,14 @@ export default function AdminPage() {
 								<p className="text-xs text-slate-400 dark:text-slate-500 mb-1">Productos vendidos</p>
 								<p className="text-2xl font-bold text-slate-800 dark:text-slate-100">
 									{stats.productosVendidos}
+								</p>
+							</div>
+
+							{/* Oyentes de Radio */}
+							<div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4 cursor-pointer hover:border-blue-400 dark:hover:border-blue-600 transition-colors">
+								<p className="text-xs text-slate-400 dark:text-slate-500 mb-1">Oyentes radio hoy</p>
+								<p className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+									{stats.radioListenersToday}
 								</p>
 							</div>
 
