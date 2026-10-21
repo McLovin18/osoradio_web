@@ -41,12 +41,14 @@ export default function AdminPage() {
 		productosSinStock: Producto[];
 		ordenesHoy: Orden[];
 		radioListenersToday: number;
+		radioListenersActive: number;
 	}>({
 		totalVentas: 0,
 		productosVendidos: 0,
 		productosSinStock: [],
 		ordenesHoy: [],
 		radioListenersToday: 0,
+		radioListenersActive: 0,
 	});
 	const router = useRouter();
 	const today = getTodayYMD();
@@ -62,7 +64,7 @@ export default function AdminPage() {
 				const [ordenesRaw, productosRaw, radioStats] = await Promise.all([
 					obtenerTodasOrdenes(),
 					obtenerProductos({ incluirSinStock: true }),
-					fetch("/api/radio/listeners").then(res => res.json()).catch(() => ({ totalToday: 0 })),
+					fetch("/api/radio/listeners").then(res => res.json()).catch(() => ({ activeListeners: 0, totalToday: 0 })),
 				]);
 
 				const ordenes = ordenesRaw as Orden[];
@@ -98,6 +100,7 @@ export default function AdminPage() {
 					productosSinStock,
 					ordenesHoy,
 					radioListenersToday: radioStats.totalToday || 0,
+					radioListenersActive: radioStats.activeListeners || 0,
 				});
 			} catch (e) {
 				setError("Error al cargar estadísticas. Intenta de nuevo.");
@@ -145,7 +148,7 @@ export default function AdminPage() {
 						<AnalyticsWidget />
 
 						{/* Stats Cards Grid */}
-						<div className="grid grid-cols-4 gap-4">
+						<div className="grid grid-cols-5 gap-4">
 							{/* Total Ventas */}
 							<div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4 cursor-pointer hover:border-purple-400 dark:hover:border-purple-600 transition-colors">
 								<p className="text-xs text-slate-400 dark:text-slate-500 mb-1">Ventas totales hoy</p>
@@ -159,6 +162,14 @@ export default function AdminPage() {
 								<p className="text-xs text-slate-400 dark:text-slate-500 mb-1">Productos vendidos</p>
 								<p className="text-2xl font-bold text-slate-800 dark:text-slate-100">
 									{stats.productosVendidos}
+								</p>
+							</div>
+
+							{/* Oyentes en Vivo */}
+							<div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-4 cursor-pointer hover:border-red-400 dark:hover:border-red-600 transition-colors">
+								<p className="text-xs text-slate-400 dark:text-slate-500 mb-1">Oyentes en vivo</p>
+								<p className="text-2xl font-bold text-red-600 dark:text-red-400">
+									{stats.radioListenersActive}
 								</p>
 							</div>
 

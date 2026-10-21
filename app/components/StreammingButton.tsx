@@ -177,10 +177,6 @@ export default function RadioPlayer({ buttonText = "Escuchar en vivo" }: RadioPl
         </div>
       )}
 
-      <div className="text-sm font-medium" style={{ color: "var(--textSecondary)" }}>
-        En vivo: {activeListeners}
-      </div>
-
       {status === "offline" && (
         <p className="text-sm text-center" style={{ color: "var(--textSecondary)" }}>
           La radio está fuera del aire. Intenta más tarde.
