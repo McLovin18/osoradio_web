@@ -15,9 +15,7 @@ import { Inter } from "next/font/google";
 export const revalidate = 1800;
 
 // Cambiar cuando tengas el dominio
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ||
-  "https://radiooso.ec";
+const SITE_URL ="https://osoradio.org";
 
 const SITE_NAME = "Radio Oso - 98.5 FM";
 
