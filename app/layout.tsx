@@ -91,7 +91,7 @@ export const metadata: Metadata = {
 
     images: [
       {
-        url: `${SITE_URL}/og-image.jpg`,
+        url: `${SITE_URL}/img-1.jpeg`,
         width: 1200,
         height: 630,
         alt: "Radio Oso - 98.5 FM",
