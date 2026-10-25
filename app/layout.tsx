@@ -105,7 +105,7 @@ export const metadata: Metadata = {
     description:
       "Radio Oso - Emisora de radio en Ecuador transmitiendo en 98.5 FM. Programas en vivo, la mejor música 24/7 y contenido de entretenimiento.",
 
-    images: [`${SITE_URL}/twitter-image.jpg`],
+    images: [`${SITE_URL}/img-1.jpeg`],
   },
 
   alternates: {

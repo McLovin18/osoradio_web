@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getBlogById } from "../../lib/blogs-db";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://radiooso.ec";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.osoradio.org";
 
 // ISR: Revalidar cada hora (3600 segundos)
 // Significa que la página se cachea por 1 hora, después se regenera
