@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getBlogById } from "../../lib/blogs-db";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "osoradio.org";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://radiooso.ec";
 
 // ISR: Revalidar cada hora (3600 segundos)
 // Significa que la página se cachea por 1 hora, después se regenera
@@ -58,18 +58,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 
     const description =
-      blog.excerpt || blog.content?.substring(0, 160) || "Noticias de OSO RADIO";
-    const imageUrl = blog.image || `${SITE_URL}/default-blog-image.jpg`;
+      blog.description || "Noticias de OSO RADIO";
+    
+    // Extraer la primera imagen de los blocks del blog
+    const firstImageBlock = blog.blocks?.find(
+      (block: any) => block.type === "image" && block.url
+    );
+    const imageUrl = firstImageBlock?.url 
+      ? (firstImageBlock.url.startsWith('http') ? firstImageBlock.url : `${SITE_URL}${firstImageBlock.url.startsWith('/') ? '' : '/'}${firstImageBlock.url}`)
+      : `${SITE_URL}/logo_oso.png`;
 
     return {
       title: `${blog.title} | OSO RADIO`,
       description: description,
-      keywords: blog.tags || ["Radio", "Transmisión en 98.5FM", "OSO RADIO"],
+      keywords: ["Radio", "Transmisión en 98.5FM", "OSO RADIO", "Noticias"],
       openGraph: {
         type: "article",
         url: `${SITE_URL}/blogs/${id}`,
         title: blog.title,
         description: description,
+        siteName: "Radio Oso - 98.5 FM",
         images: [
           {
             url: imageUrl,
@@ -87,6 +95,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         title: blog.title,
         description: description,
         images: [imageUrl],
+      },
+      other: {
+        // Meta tags específicos de WhatsApp
+        "og:site_name": "Radio Oso - 98.5 FM",
+        "og:locale": "es_EC",
       },
       alternates: {
         canonical: `${SITE_URL}/blogs/${id}`,
