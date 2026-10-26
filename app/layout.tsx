@@ -17,7 +17,7 @@ export const revalidate = 1800;
 // Cambiar cuando tengas el dominio
 const SITE_URL ="https://www.osoradio.org";
 
-const SITE_NAME = "Radio Oso - 98.5 FM";
+const SITE_NAME = "OSO RADIO - 98.5 FM";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -44,22 +44,22 @@ const themeInitScript = `
 
 export const metadata: Metadata = {
   title: {
-    default: "Radio Oso - 98.5 FM Ecuador | La mejor música en tu sintonía",
-    template: "%s | Radio Oso",
+    default: "OSO RADIO - 98.5 FM Guayas | La mejor música, 24/7, estés donde estés.",
+    template: "%s | OSO RADIO",
   },
 
   description:
-    "Radio Oso - Emisora de radio en Ecuador transmitiendo en 98.5 FM. Programas en vivo, la mejor música 24/7 y contenido de entretenimiento.",
+    "OSO RADIO - Emisora de radio en Guayas transmitiendo en 98.5 FM. Programas en vivo, la mejor música, 24/7, estés donde estés, y contenido de entretenimiento.",
 
   keywords: [
-    "Radio Oso",
-    "98.5 FM Ecuador",
-    "Radio Ecuador",
+    "OSO RADIO",
+    "98.5 FM Guayas",
+    "Radio Guayas",
     "Emisora de radio",
     "Programas en vivo",
     "Música en vivo",
     "Locutores",
-    "Noticias Ecuador",
+    "Noticias Guayas",
   ],
 
   creator: SITE_NAME,
@@ -82,10 +82,10 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: SITE_NAME,
 
-    title: "Radio Oso - 98.5 FM Ecuador | La mejor música en tu sintonía",
+    title: "OSO RADIO - 98.5 FM Guayas | La mejor música, 24/7, estés donde estés",
 
     description:
-      "Radio Oso - Emisora de radio en Ecuador transmitiendo en 98.5 FM. Programas en vivo, la mejor música 24/7 y contenido de entretenimiento.",
+      "OSO RADIO - Emisora de radio en Guayas transmitiendo en 98.5 FM. Programas en vivo, la mejor música 24/7 y contenido de entretenimiento.",
 
     images: [
       {
@@ -100,10 +100,10 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
 
-    title: "Radio Oso - 98.5 FM Ecuador | La mejor música en tu sintonía",
+    title: "OSO RADIO - 98.5 FM Guayas | La mejor música, 24/7, estés donde estés",
 
     description:
-      "Radio Oso - Emisora de radio en Ecuador transmitiendo en 98.5 FM. Programas en vivo, la mejor música 24/7 y contenido de entretenimiento.",
+      "OSO RADIO - Emisora de radio en Guayas transmitiendo en 98.5 FM. Programas en vivo, la mejor música, 24/7, estés donde estés, y contenido de entretenimiento.",
 
     images: [`${SITE_URL}/img-1.jpeg`],
   },
