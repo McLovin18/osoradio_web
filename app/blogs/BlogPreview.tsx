@@ -76,7 +76,38 @@ function renderBlock(block: BlogBlock, index: number) {
       </figure>
     );
   }
-  
+
+  if (block.type === "video") {
+    const style: React.CSSProperties = {
+      borderRadius: block.style?.borderRadius,
+      padding: block.style?.paddingBlock,
+    };
+    return (
+      <figure
+        key={block.id || index}
+        className="my-8 flex flex-col items-center"
+        style={style}
+      >
+        {block.url && (
+          <div className="w-full rounded-lg shadow-md overflow-hidden">
+            <video
+              src={block.url}
+              controls
+              className="w-full"
+              style={{ maxHeight: '600px', objectFit: 'contain' }}
+              preload="metadata"
+            />
+          </div>
+        )}
+        {block.caption && (
+          <figcaption className="mt-3 text-sm text-slate-500 dark:text-slate-400 text-center">
+            {block.caption}
+          </figcaption>
+        )}
+      </figure>
+    );
+  }
+
   return null;
 }
 

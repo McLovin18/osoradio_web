@@ -14,3 +14,17 @@ export async function uploadImageAndGetUrl(file: File, path: string): Promise<st
   const url = await getDownloadURL(storageRef);
   return url;
 }
+
+/**
+ * Sube un video a Firebase Storage y retorna la URL pública.
+ * @param file Archivo de video a subir
+ * @param path Ruta en Storage (ej: 'videos/nombre.mp4')
+ * @returns URL pública del video
+ */
+export async function uploadVideoAndGetUrl(file: File, path: string): Promise<string> {
+  const storage = getStorage(app);
+  const storageRef = ref(storage, path);
+  await uploadBytes(storageRef, file);
+  const url = await getDownloadURL(storageRef);
+  return url;
+}

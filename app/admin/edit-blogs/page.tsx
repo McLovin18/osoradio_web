@@ -15,7 +15,7 @@ import {
 	removeFeaturedBlog,
 	updateBlogPositions,
 } from "../../lib/blogs-db";
-import { uploadImageAndGetUrl } from "../../lib/upload-image";
+import { uploadImageAndGetUrl, uploadVideoAndGetUrl } from "../../lib/upload-image";
 import BlogPreview from "../../blogs/BlogPreview";
 
 type EditableBlog = Partial<Blog> & { id?: string };
@@ -115,12 +115,19 @@ export default function AdminEditBlogsPage() {
 				type: "paragraph",
 				text: "Nuevo párrafo. Escribe aquí el contenido del artículo.",
 			};
-		} else {
+		} else if (type === "image") {
 			block = {
 				id,
 				type: "image",
 				url: "",
 				alt: "",
+				caption: "",
+			};
+		} else {
+			block = {
+				id,
+				type: "video",
+				url: "",
 				caption: "",
 			};
 		}
@@ -260,6 +267,24 @@ export default function AdminEditBlogsPage() {
 			setUploadingBlockId(blockId);
 			const path = `blogs/${Date.now()}-${file.name}`;
 			const url = await uploadImageAndGetUrl(file, path);
+			updateBlock(index, (block) => ({ ...block, url } as BlogBlock));
+		} finally {
+			setUploadingBlockId(null);
+		}
+	};
+
+	const handleVideoFileChange = async (
+		index: number,
+		e: ChangeEvent<HTMLInputElement>
+	) => {
+		const file = e.target.files?.[0];
+		if (!file) return;
+		const blockId = (editingBlog?.blocks as BlogBlock[] | undefined)?.[index]?.id;
+		if (!blockId) return;
+		try {
+			setUploadingBlockId(blockId);
+			const path = `videos/${Date.now()}-${file.name}`;
+			const url = await uploadVideoAndGetUrl(file, path);
 			updateBlock(index, (block) => ({ ...block, url } as BlogBlock));
 		} finally {
 			setUploadingBlockId(null);
@@ -529,6 +554,14 @@ export default function AdminEditBlogsPage() {
 											<span className="material-icons-round text-sm">image</span>
 											Imagen
 										</button>
+										<button
+											type="button"
+											onClick={() => addBlock("video")}
+											className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700"
+										>
+											<span className="material-icons-round text-sm">videocam</span>
+											Video
+										</button>
 									</div>
 
 									<div className="space-y-3 max-h-[420px] overflow-auto pr-1">
@@ -560,7 +593,9 @@ export default function AdminEditBlogsPage() {
 																	? "Subtítulo"
 																	: block.type === "paragraph"
 																	? "Párrafo"
-																	: "Imagen"}
+																	: block.type === "image"
+																	? "Imagen"
+																	: "Video"}
 															</span>
 														</div>
 														<div className="flex items-center gap-1 text-slate-500">
@@ -844,13 +879,105 @@ export default function AdminEditBlogsPage() {
 															</div>
 														</div>
 													)}
+
+													{block.type === "video" && (
+														<div className="space-y-2">
+															<div className="grid grid-cols-1 md:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] gap-3 items-start">
+																<div className="space-y-2">
+																	<label className="block text-xs font-semibold text-slate-500 dark:text-slate-400">
+																		URL del video
+																	</label>
+																	<input
+																		type="text"
+																		className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm"
+																		value={block.url}
+																		onChange={(e) =>
+																			updateBlock(index, (b) => ({
+																				...(b as any),
+																				url: e.target.value,
+																			}))
+																		}
+																		placeholder="https://..."
+																	/>
+																	<div className="flex flex-wrap items-center gap-2 text-[11px]">
+																		<label className="inline-flex items-center gap-2 cursor-pointer">
+																			<span className="px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-100">
+																				Subir video
+																			</span>
+																			<input
+																				type="file"
+																				accept="video/*"
+																				className="hidden"
+																				onChange={(e) => handleVideoFileChange(index, e)}
+																			/>
+																		</label>
+																		{uploadingBlockId === block.id && (
+																			<span className="text-slate-500">
+																				Subiendo video...
+																			</span>
+																		)}
+																	</div>
+																	<div className="grid grid-cols-2 gap-2 text-[11px] text-slate-600 dark:text-slate-300 mt-2">
+																		<div>
+																			<label className="block mb-1">Radio de borde</label>
+																			<input
+																				type="text"
+																				className="w-full px-2 py-1 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900"
+																				placeholder="p.ej. 16px"
+																				value={block.style?.borderRadius || ""}
+																				onChange={(e) =>
+																					updateBlockStyle(
+																						index,
+																						"borderRadius",
+																						e.target.value
+																					)
+																				}
+																			/>
+																		</div>
+																		<div>
+																			<label className="block mb-1">Padding</label>
+																			<input
+																				type="text"
+																				className="w-full px-2 py-1 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900"
+																				placeholder="p.ej. 8px"
+																				value={block.style?.paddingBlock || ""}
+																				onChange={(e) =>
+																					updateBlockStyle(
+																						index,
+																						"paddingBlock",
+																						e.target.value
+																					)
+																				}
+																			/>
+																		</div>
+																	</div>
+																</div>
+
+																<div className="space-y-2">
+																	<label className="block text-xs font-semibold text-slate-500 dark:text-slate-400">
+																		Leyenda (se muestra debajo del video)
+																	</label>
+																	<textarea
+																		className="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm min-h-[60px]"
+																		value={block.caption || ""}
+																		onChange={(e) =>
+																			updateBlock(index, (b) => ({
+																				...(b as any),
+																				caption: e.target.value,
+																			}))
+																		}
+																		placeholder="Descripción opcional del video"
+																	/>
+																</div>
+															</div>
+														</div>
+													)}
 												</div>
 											))
 										) : (
 											<p className="text-xs text-slate-500 dark:text-slate-400">
-												Añade subtítulos, párrafos o imágenes para construir el contenido del
-												blog. Puedes agregar varias imágenes seguidas de párrafos según lo que
-												necesites.
+												Añade subtítulos, párrafos, imágenes o videos para construir el contenido del
+												blog. Puedes agregar varios elementos según lo que necesites.
 											</p>
 										)}
 									</div>

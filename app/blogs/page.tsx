@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getPublishedBlogs } from "../lib/blogs-db";
+import Link from "next/link";
+import { getPublishedBlogsWithoutVideos } from "../lib/blogs-db";
 import { useTracking } from "../lib/useAnalytics";
 import type { Blog } from "../lib/blog-types";
 
@@ -15,7 +16,7 @@ export default function BlogsPage() {
   useEffect(() => {
     async function load() {
       setLoading(true);
-      const data = await getPublishedBlogs();
+      const data = await getPublishedBlogsWithoutVideos();
       setBlogs(data);
       setLoading(false);
     }
@@ -65,12 +66,9 @@ export default function BlogsPage() {
             {featured && (
               <section className="mb-12">
                 <h2 className="text-2xl font-semibold mb-4" style={{ color: "var(--text)" }}>Noticia destacada</h2>
-                <button
-                  type="button"
-                  onClick={() => {
-                    trackBlogClick().catch(console.error);
-                    router.push(`/blogs/${featured.id}`);
-                  }}
+                <Link
+                  href={`/blogs/${featured.id}`}
+                  onClick={() => trackBlogClick().catch(console.error)}
                   style={{
                     borderColor: "var(--border)",
                     background: "var(--cardBg)"
@@ -109,7 +107,7 @@ export default function BlogsPage() {
                       <span>Leer noticia copleta</span>
                     </div>
                   </div>
-                </button>
+                </Link>
               </section>
             )}
 
@@ -120,12 +118,10 @@ export default function BlogsPage() {
                   {others.map((b) => {
                     const imageBlock = b.blocks?.find((block) => block.type === "image");
                     return (
-                      <article
+                      <Link
                         key={b.id}
-                        onClick={() => {
-                          trackBlogClick().catch(console.error);
-                          router.push(`/blogs/${b.id}`);
-                        }}
+                        href={`/blogs/${b.id}`}
+                        onClick={() => trackBlogClick().catch(console.error)}
                         style={{
                           borderColor: "var(--border)",
                           background: "var(--cardBg)"
@@ -153,7 +149,7 @@ export default function BlogsPage() {
                             <span>Ver más</span>
                           </div>
                         </div>
-                      </article>
+                      </Link>
                     );
                   })}
                 </div>

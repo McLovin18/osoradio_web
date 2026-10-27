@@ -98,3 +98,17 @@ export async function updateBlogPositions(blogIds: string[]): Promise<void> {
   });
   await batch.commit();
 }
+
+export function blogHasVideo(blog: Blog): boolean {
+  return Array.isArray(blog.blocks) && blog.blocks.some((block) => block.type === "video");
+}
+
+export async function getPublishedBlogsWithVideos(): Promise<Blog[]> {
+  const all = await getPublishedBlogs();
+  return all.filter(blogHasVideo);
+}
+
+export async function getPublishedBlogsWithoutVideos(): Promise<Blog[]> {
+  const all = await getPublishedBlogs();
+  return all.filter((blog) => !blogHasVideo(blog));
+}

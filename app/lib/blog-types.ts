@@ -1,7 +1,7 @@
 import type { Timestamp } from "firebase/firestore";
 import type { LandingFieldStyle } from "./landing-types";
 
-export type BlogBlockType = "subtitle" | "paragraph" | "image";
+export type BlogBlockType = "subtitle" | "paragraph" | "image" | "video";
 
 export type BlogFieldStyle = LandingFieldStyle;
 
@@ -23,6 +23,13 @@ export type BlogBlock =
       type: "image";
       url: string;
       alt?: string;
+      caption?: string;
+      style?: BlogFieldStyle;
+    }
+  | {
+      id: string;
+      type: "video";
+      url: string;
       caption?: string;
       style?: BlogFieldStyle;
     };
