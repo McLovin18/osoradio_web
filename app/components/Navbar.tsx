@@ -265,8 +265,8 @@ export const Navbar = () => {
     { href: "/", label: "Inicio" },
     { href: "/programas", label: "Programas" },
     { href: "/interlocutores", label: "Interlocutores" },
-    { href: "/blogs", label: "Noticias" },
-    { href: "/videos", label: "Videos" },
+    { href: "/blogs", label: "El Dato" },
+    { href: "/videos", label: "Dale Play" },
   ];
 
   const infoSliderItems = [

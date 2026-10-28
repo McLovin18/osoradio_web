@@ -59,12 +59,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     const description =
       blog.description || "Noticias de OSO RADIO";
-    
+
+    // Detectar si el blog contiene videos
+    const hasVideo = blog.blocks?.some((block: any) => block.type === "video");
+
     // Extraer la primera imagen de los blocks del blog
     const firstImageBlock = blog.blocks?.find(
       (block: any) => block.type === "image" && block.url
     );
-    const imageUrl = firstImageBlock?.url 
+
+    // Si es un blog con video, usar una imagen específica para SEO (puedes cambiar esta URL)
+    const videoSeoImage = `${SITE_URL}/img_video.png`; // Imagen específica para videos
+
+    const imageUrl = hasVideo
+      ? videoSeoImage // Usar imagen específica para videos
+      : firstImageBlock?.url
       ? (firstImageBlock.url.startsWith('http') ? firstImageBlock.url : `${SITE_URL}${firstImageBlock.url.startsWith('/') ? '' : '/'}${firstImageBlock.url}`)
       : `${SITE_URL}/logo_oso.png`;
 
