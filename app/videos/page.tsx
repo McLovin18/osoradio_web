@@ -101,8 +101,12 @@ export default function VideosPage() {
                       )}
                     </div>
                   ) : (
-                    <div className="w-full md:w-1/3 h-48 md:h-auto flex-shrink-0 flex items-center justify-center" style={{ background: "var(--bgSecondary)" }}>
-                      <span className="material-icons-round text-6xl" style={{ color: "var(--color-neon-amarillo)" }}>play_circle</span>
+                    <div className="w-full md:w-1/3 h-48 md:h-auto flex-shrink-0">
+                      <img
+                        src="/img_video.png"
+                        alt={featured.title}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                   )}
                   <div className="p-6 flex flex-col justify-center flex-1">
@@ -154,8 +158,12 @@ export default function VideosPage() {
                             />
                           </div>
                         ) : (
-                          <div className="w-full h-40 flex items-center justify-center" style={{ background: "var(--bgSecondary)" }}>
-                            <span className="material-icons-round text-4xl" style={{ color: "var(--color-neon-amarillo)" }}>play_circle</span>
+                          <div className="w-full h-40 overflow-hidden">
+                            <img
+                              src="/img_video1.png"
+                              alt={b.title}
+                              className="w-full h-full object-cover"
+                            />
                           </div>
                         )}
                         <div className="p-4 flex flex-col flex-1">
