@@ -15,6 +15,13 @@ export function useTrackPageView() {
   useEffect(() => {
     // Track page view when component mounts
     trackPageView().catch(console.error);
+
+    // Heartbeat every 60s to keep "visitors online" presence fresh
+    const interval = setInterval(() => {
+      trackPageView().catch(console.error);
+    }, 60 * 1000);
+
+    return () => clearInterval(interval);
   }, []);
 }
 

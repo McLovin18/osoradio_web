@@ -52,12 +52,12 @@ export async function POST(req: NextRequest) {
       console.log("[Analytics API] 8b. Document exists:", docSnap.exists);
 
       if (docSnap.exists) {
-        const data = docSnap.data() as any;
+        const data = docSnap.data() as { visitorIds?: string[] } | undefined;
         console.log("[Analytics API] 8c. Existing doc data:", data);
-        
-        if (!data.visitorIds || !data.visitorIds.includes(deviceId)) {
+
+        if (!data?.visitorIds || !data.visitorIds.includes(deviceId)) {
           console.log("[Analytics API] 8d. New visitor, incrementing count...");
-          const updatedVisitors = [...(data.visitorIds || []), deviceId];
+          const updatedVisitors = [...(data?.visitorIds || []), deviceId];
           await docRef.update({
             visitorIds: updatedVisitors,
             uniqueVisitors: admin.firestore.FieldValue.increment(1),
@@ -85,6 +85,12 @@ export async function POST(req: NextRequest) {
         });
         console.log(`[Analytics API] ✅ Created new analytics doc for today`);
       }
+
+      // Update real-time presence (lastSeen) for this visitor
+      await db.collection("website_visitors").doc(deviceId).set({
+        lastSeen: new Date().toISOString(),
+        date: today,
+      }, { merge: true });
     } else if (eventType === "click") {
       console.log("[Analytics API] 8a. Branch: click");
       // Track click
@@ -96,7 +102,7 @@ export async function POST(req: NextRequest) {
 
       if (docSnap.exists) {
         console.log("[Analytics API] 8d. Updating existing doc with click...");
-        const updateData: any = {
+        const updateData: Record<string, unknown> = {
           totalClicks: admin.firestore.FieldValue.increment(1),
           lastUpdated: admin.firestore.FieldValue.serverTimestamp(),
         };
@@ -107,14 +113,14 @@ export async function POST(req: NextRequest) {
         console.log(`[Analytics API] ✅ Updated existing doc with click`);
       } else {
         console.log("[Analytics API] 8d. Creating new doc for click...");
-        const newClicksByType = {
+        const newClicksByType: Record<string, number> = {
           productClick: 0,
           categoryClick: 0,
           buttonClick: 0,
           linkClick: 0,
           blogClick: 0,
         };
-        (newClicksByType as any)[clickType] = 1;
+        newClicksByType[clickType] = 1;
 
         await docRef.set({
           date: today,
