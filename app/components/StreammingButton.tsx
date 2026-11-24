@@ -15,7 +15,14 @@ export default function RadioPlayer({ buttonText = "Escuchar en vivo" }: RadioPl
   const audioRef = useRef<HTMLAudioElement>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [activeListeners, setActiveListeners] = useState<number>(0);
-  const sessionId = useRef<string>(`listener_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`);
+  const deviceId = useRef<string>(() => {
+    let id = localStorage.getItem("radio_device_id");
+    if (!id) {
+      id = `device_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      localStorage.setItem("radio_device_id", id);
+    }
+    return id;
+  });
   const isRegistered = useRef<boolean>(false);
 
   // Registrar oyente cuando empieza a escuchar
@@ -24,7 +31,7 @@ export default function RadioPlayer({ buttonText = "Escuchar en vivo" }: RadioPl
       await fetch("/api/radio/listeners", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sessionId: sessionId.current }),
+        body: JSON.stringify({ deviceId: deviceId.current }),
       });
     } catch (error) {
       console.error("Error registrando oyente:", error);
@@ -34,7 +41,7 @@ export default function RadioPlayer({ buttonText = "Escuchar en vivo" }: RadioPl
   // Eliminar registro de oyente cuando deja de escuchar
   const unregisterListener = async () => {
     try {
-      await fetch(`/api/radio/listeners?sessionId=${sessionId.current}`, {
+      await fetch(`/api/radio/listeners?deviceId=${deviceId.current}`, {
         method: "DELETE",
       });
     } catch (error) {
@@ -48,7 +55,7 @@ export default function RadioPlayer({ buttonText = "Escuchar en vivo" }: RadioPl
       await fetch("/api/radio/listeners", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sessionId: sessionId.current }),
+        body: JSON.stringify({ deviceId: deviceId.current }),
       });
     } catch (error) {
       console.error("Error enviando heartbeat:", error);

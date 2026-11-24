@@ -41,30 +41,36 @@ export async function GET(request: NextRequest) {
 // POST: Registrar que un usuario está escuchando
 export async function POST(request: NextRequest) {
   try {
-    const { sessionId } = await request.json();
+    const { deviceId } = await request.json();
 
-    if (!sessionId) {
-      return NextResponse.json({ error: "sessionId requerido" }, { status: 400 });
+    if (!deviceId) {
+      return NextResponse.json({ error: "deviceId requerido" }, { status: 400 });
     }
 
     const today = new Date().toISOString().slice(0, 10);
     const now = new Date().toISOString();
 
-    // Crear documento de oyente activo
-    await db.collection("radio_listeners").doc(sessionId).set({
+    // Verificar si el documento ya existe (para saber si es primera vez hoy)
+    const listenerDoc = await db.collection("radio_listeners").doc(deviceId).get();
+    const isFirstTimeToday = !listenerDoc.exists || listenerDoc.data()?.date !== today;
+
+    // Crear o actualizar documento de oyente activo
+    await db.collection("radio_listeners").doc(deviceId).set({
       startedAt: now,
       lastSeen: now,
       date: today,
     });
 
-    // Incrementar contador total del día
-    const dailyStatsRef = db.collection("radio_stats").doc(today);
-    await dailyStatsRef.set({
-      totalListeners: admin.firestore.FieldValue.increment(1),
-      updatedAt: now,
-    }, { merge: true });
+    // Solo incrementar contador si es la primera vez que este dispositivo escucha hoy
+    if (isFirstTimeToday) {
+      const dailyStatsRef = db.collection("radio_stats").doc(today);
+      await dailyStatsRef.set({
+        totalListeners: admin.firestore.FieldValue.increment(1),
+        updatedAt: now,
+      }, { merge: true });
+    }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, isFirstTimeToday });
   } catch (error) {
     console.error("Error registrando oyente:", error);
     return NextResponse.json({ error: "Error interno" }, { status: 500 });
@@ -74,17 +80,17 @@ export async function POST(request: NextRequest) {
 // PUT: Actualizar heartbeat del oyente (mantener lastSeen actualizado)
 export async function PUT(request: NextRequest) {
   try {
-    const { sessionId } = await request.json();
+    const { deviceId } = await request.json();
 
-    if (!sessionId) {
-      return NextResponse.json({ error: "sessionId requerido" }, { status: 400 });
+    if (!deviceId) {
+      return NextResponse.json({ error: "deviceId requerido" }, { status: 400 });
     }
 
     const now = new Date().toISOString();
     const today = new Date().toISOString().slice(0, 10);
 
     // Usar set con merge para crear si no existe o actualizar si existe
-    await db.collection("radio_listeners").doc(sessionId).set({
+    await db.collection("radio_listeners").doc(deviceId).set({
       lastSeen: now,
       date: today,
     }, { merge: true });
@@ -100,13 +106,13 @@ export async function PUT(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const sessionId = searchParams.get("sessionId");
+    const deviceId = searchParams.get("deviceId");
 
-    if (!sessionId) {
-      return NextResponse.json({ error: "sessionId requerido" }, { status: 400 });
+    if (!deviceId) {
+      return NextResponse.json({ error: "deviceId requerido" }, { status: 400 });
     }
 
-    await db.collection("radio_listeners").doc(sessionId).delete();
+    await db.collection("radio_listeners").doc(deviceId).delete();
 
     return NextResponse.json({ success: true });
   } catch (error) {
